@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ikenna Nwakwesi - Product Manager & Systems Operator</title>
+<meta name="description" content="Ikenna 'Navy' Nwakwesi - Product Manager and Systems Operator: integrations, platform, and AI. Builder and operator of agentic infrastructure. Currently building BA$H.">
+<style>
+  @font-face{font-family:'Archivo';font-style:normal;font-weight:400 900;font-stretch:62% 125%;font-display:swap;src:url('fonts/archivo-normal-400_900.woff2') format('woff2');}
+  @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/cormorantgaramond-italic-400.woff2') format('woff2');}
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/cormorantgaramond-normal-400.woff2') format('woff2');}
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/cormorantgaramond-normal-500.woff2') format('woff2');}
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/cormorantgaramond-normal-600.woff2') format('woff2');}
+
+  /* design tokens */
+  :root{
+    --primary:#2A1F17; --on-primary:#EFE7D7;
+    --secondary:#6E5B47; --tertiary:#3F6B5B; --tertiary-c:#5C8A78;
+    --quaternary:#B97A3E; --neutral:#EFE7D7;
+    --surface:#E2D6BF; --surface-c:#D2C2A4;
+    --patina:#83A395; --patina-deep:#3F6B5B; --outline:#6E5B47;
+    --serif:'Canela Deck','Cormorant Garamond',serif;
+    --serif-text:'Canela Text','Cormorant Garamond',serif;
+    --grotesk:'Söhne Breit','Archivo',sans-serif;
+    --elev1:0 1px 4px #2A1F1714; --elev2:0 6px 18px #2A1F1722;
+  }
+  /* dark overrides, explicit to avoid var typos */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --neutral:#1B130D; --surface:#3A2D22; --surface-c:#4A3A2C;
+      --primary:#EFE7D7; --on-primary:#1B130D;
+      --secondary:#B7A68F; --outline:#6E5B47;
+      --patina:#A8C0B3; --elev1:0 1px 4px #00000040; --elev2:0 6px 18px #00000055;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--neutral); color:var(--primary);
+    font-family:var(--serif-text); font-size:17px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; position:relative;
+  }
+  /* substrate grain - part of the identity */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.06;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:72px 28px 44px;position:relative;z-index:2;}
+  .hallmark{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700;
+    font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--secondary);
+  }
+  /* --- hero: asymmetric 7/5 --- */
+  .hero{display:grid;grid-template-columns:7fr 5fr;gap:44px;align-items:end;margin-bottom:72px;}
+  h1{
+    font-family:var(--serif); font-size:clamp(3rem,8.5vw,5.5rem); font-weight:500;
+    line-height:.95; letter-spacing:-.025em; margin:18px 0 12px;
+    font-feature-settings:"liga","dlig";
+  }
+  .role{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:1rem;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--tertiary); margin:0 0 18px;
+  }
+  .intro{font-size:1.125rem;max-width:56ch;margin:0;}
+  .hero-side{display:flex;flex-direction:column;gap:12px;}
+  .now-card{
+    background:var(--surface); border:1px solid var(--outline);
+    border-radius:28px 4px 28px 4px; padding:28px; box-shadow:var(--elev2);
+  }
+  .now-card .hallmark{color:var(--quaternary);}
+  .now-card p{margin:8px 0 0;font-size:.9375rem;}
+  .now-card a{color:var(--primary);text-decoration-color:var(--quaternary);text-underline-offset:3px;}
+  .now-card a:hover{color:var(--tertiary);}
+  .links{display:flex;gap:6px;flex-wrap:wrap;}
+  .links a{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.6875rem;
+    letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+    background:var(--patina); color:#2A1F17; border-radius:999px; padding:8px 16px;
+    transition:background .28s cubic-bezier(.34,1.56,.64,1), transform .28s cubic-bezier(.34,1.56,.64,1);
+  }
+  .links a:hover{background:var(--tertiary-c);transform:translateY(-2px);}
+  /* --- sections --- */
+  section{margin-top:72px;}
+  .epigraph{
+    margin:64px 0 0; padding:0 0 0 24px; border-left:3px solid var(--quaternary);
+    font-family:var(--serif); font-size:1.55rem; line-height:1.3; font-style:italic; max-width:34ch;
+  }
+  .also{background:var(--surface-c);border:1px solid var(--outline);border-radius:20px;padding:18px 22px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .also .hallmark{margin-right:10px;}
+  .sect-head{display:grid;grid-template-columns:4fr 8fr;gap:28px;align-items:baseline;border-top:2px solid var(--primary);padding-top:12px;margin-bottom:28px;}
+  h2{font-family:var(--serif);font-size:2.125rem;font-weight:500;letter-spacing:-.015em;line-height:1.15;margin:0;}
+  .sect-head .hallmark{padding-top:6px;}
+  .artifact{
+    position:relative;
+    background:var(--surface); border:1px solid var(--outline);
+    border-radius:28px 4px 28px 4px; padding:58px 28px 28px; margin-bottom:18px; box-shadow:var(--elev1);
+    display:grid; grid-template-columns:5fr 7fr; gap:28px;
+    transition:box-shadow .32s ease, transform .32s ease;
+  }
+  .artifact:nth-of-type(even){grid-template-columns:7fr 5fr;border-radius:4px 28px 4px 28px;}
+  .artifact:hover{box-shadow:var(--elev2);transform:translateY(-2px) rotate(.2deg);}
+  .artifact .meta .hallmark{position:absolute;top:26px;left:28px;right:28px;}
+  .artifact h3{font-family:var(--serif);font-size:1.9rem;font-weight:500;line-height:1.1;margin:0;}
+  .artifact .meta{align-self:start;}
+  .artifact .body{padding-top:8px;}
+  .artifact .body p{margin:0 0 10px;font-size:.9375rem;}
+  .artifact .body p:last-child{margin:0;}
+  .artifact a{color:var(--primary);text-decoration-color:var(--quaternary);text-underline-offset:3px;}
+  .artifact a:hover{color:var(--tertiary);}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .chip{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:500; font-size:.6875rem;
+    letter-spacing:.06em; text-transform:uppercase;
+    background:var(--patina); color:#2A1F17; border-radius:999px; padding:5px 12px;
+  }
+  .provenance{
+    display:inline-block; font-family:var(--grotesk); font-stretch:62%; font-weight:700;
+    font-size:.6875rem; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--quaternary); color:#EFE7D7; border-radius:2px; padding:4px 10px; margin:0 8px 8px 0;
+  }
+  .cred{background:var(--surface-c);border:1px solid var(--outline);border-radius:20px;padding:22px 24px;}
+  .cred p{margin:6px 0;font-size:.9375rem;}
+  footer{
+    margin-top:96px;border-top:1px solid var(--outline);padding-top:18px;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    font-family:var(--grotesk);font-stretch:62%;font-size:.6875rem;font-weight:500;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--secondary);
+  }
+  @media(max-width:768px){
+    .hero,.artifact,.artifact:nth-of-type(even),.sect-head{grid-template-columns:1fr;gap:16px;}
+    .wrap{padding-top:44px;}
+    .artifact{padding-top:28px;}
+    .artifact .meta .hallmark{position:static;display:block;margin-bottom:8px;}
+    .artifact .body{padding-top:0;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <span class="hallmark" style="color:var(--quaternary)">Portfolio &middot; MMXXVI &middot; Est. Toronto</span>
+      <h1>Ikenna &ldquo;Navy&rdquo;<br>Nwakwesi</h1>
+      <p class="role">Product Manager &amp; Systems Operator - Integrations, Platform &amp; AI</p>
+      <p class="intro">Ten-plus years managing partner ecosystems and product lines for enterprise technology vendors, B2B and B2C. An interest in design and data analysis led me to teach myself the technical implementation, and now I ship agentic AI systems hands-on: the data layers, the tool-use interfaces, and the infrastructure they run on.</p>
+    </div>
+    <div class="hero-side">
+      <div class="now-card">
+        <span class="hallmark">Currently Building</span>
+        <p><a href="https://bashsystems.net" target="_blank" rel="noopener">BA$H - born again systems</a>: AI-native workflow automation for founders, ops teams, and agencies. Turnkey agents and integrations deployed on the client&rsquo;s own infrastructure, with hosted ops for lightweight workflows.</p>
+      </div>
+      <div class="links">
+        <a href="https://github.com/mdvnavy" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ikennanwakwesi" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:nwakwesi@gmail.com">Email</a>
+      </div>
+    </div>
+  </header>
+
+  <blockquote class="epigraph">The model is only ten percent. The other ninety is the system you build around it - the validation, the context, the harness. Code is not typed; intent is orchestrated.</blockquote>
+
+  <section>
+    <div class="sect-head">
+      <span class="hallmark">01 &middot; Flagship</span>
+      <h2>Dia - Discovery Intake Agent</h2>
+    </div>
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Google for Startups AI Agents Challenge</span>
+        <h3>Questionnaire in. Scored opportunity and three documents out.</h3>
+        <div class="chips">
+          <span class="chip">Gemini ADK</span><span class="chip">Cloud Run</span><span class="chip">Voice UI</span><span class="chip">Evals</span>
+        </div>
+      </div>
+      <div class="body">
+        <p>Dia turns a client discovery questionnaire into a scored opportunity and three ready-to-send documents: client profile, opportunity analysis, and proposal draft.</p>
+        <p>Dual architecture: a fully deterministic scoring and document pipeline, plus a Gemini LlmAgent that uses those deterministic functions as tools and degrades gracefully without an API key. Ships with a dependency-free voice-enabled UI (TTS, dictation, hands-free mode), a pytest suite, an eval directory, a Dockerfile, and one-command Cloud Run deploy.</p>
+        <p>Run like a product, not a script: PM board, status directory, security policy, secret scanning, and 17 tracked issues.</p>
+        <p>Code: <a href="https://github.com/mdvnavy/Dia" target="_blank" rel="noopener">github.com/mdvnavy/Dia</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-head">
+      <span class="hallmark">02 &middot; Case Studies</span>
+      <h2>Systems in production</h2>
+    </div>
+
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Data Platform &middot; MCP</span>
+        <h3>Commercial sales-intelligence system + MCP query layer</h3>
+        <div class="chips"><span class="chip">DuckDB</span><span class="chip">Parquet</span><span class="chip">Python</span><span class="chip">MCP</span></div>
+      </div>
+      <div class="body">
+        <p>An enterprise commercial dataset of 700,000+ transaction records, made queryable in plain English. Parquet columnar storage on an embedded DuckDB engine, Python and pandas ingestion with normalization and deduplication, a unified SQL view, and a Model Context Protocol server exposing it all as tools to an AI assistant.</p>
+        <p>Concept to verified product in roughly 18 hours on constrained hardware.</p>
+      </div>
+    </div>
+
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Infrastructure &middot; Networking</span>
+        <h3>Private agentic infrastructure - LTM mesh over Tailscale</h3>
+        <div class="chips"><span class="chip">Tailscale</span><span class="chip">WireGuard</span><span class="chip">3-VPS Fleet</span></div>
+      </div>
+      <div class="body">
+        <p>A 3-server VPS agent fleet on a private Tailscale mesh (WireGuard, ACLs, MagicDNS) running multiple agent runtimes per server, with self-served artifacts to mobile and integrated search and scraping services.</p>
+        <p>I connected a vendor&rsquo;s long-term memory product over the tailnet before their integration guide existed, rejected their public-tunnel recommendation in favor of a zero-exposure architecture, and debugged an undocumented TLS SNI requirement along the way.</p>
+      </div>
+    </div>
+
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Distribution &middot; Developer Platform</span>
+        <h3>Agent Eggs - a portable skill store</h3>
+        <div class="chips"><span class="chip">SKILL.md</span><span class="chip">Hugging Face</span><span class="chip">Registry</span></div>
+      </div>
+      <div class="body">
+        <p>A distribution model for agent capabilities: skills packaged as versioned SKILL.md modules with runtime metadata, published to a Hugging Face dataset registry, and consumed by agents across the fleet.</p>
+        <p>Fourteen production skills covering the Google Workspace surface, plus a registry-of-registries index. Effectively a plugin model and developer on-ramp for agents.</p>
+      </div>
+    </div>
+
+    <div class="also">
+      <span class="hallmark">Also shipped</span>
+      <span class="chip">Billin$ &middot; invoice automation</span>
+      <span class="chip">PRESS &middot; dossier engine</span>
+      <span class="chip">Fleet-Kit &middot; agent registry</span>
+      <span class="chip">Content curation pipeline</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-head">
+      <span class="hallmark">03 &middot; Scratch</span>
+      <h2>WIPS</h2>
+    </div>
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Essay &middot; In Progress</span>
+        <h3>Learning what code can do</h3>
+      </div>
+      <div class="body">
+        <p>Coming to code from design and data, you don&rsquo;t see a developer&rsquo;s tool - you see something with no ceiling: administration, organization, research, a dozen uses nobody thinks to apply it to. And on the moment it clicks: I can figure this out. No roadmap, just reading, researching, and pulling threads.</p>
+      </div>
+    </div>
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Essay &middot; In Progress</span>
+        <h3>The tailnet you already have</h3>
+      </div>
+      <div class="body">
+        <p>Notes from wiring a long-term memory service into a private mesh before the vendor published their integration guide. Their version suggested a public tunnel; mine never left the tailnet. A quiet case for private-by-default agent infrastructure.</p>
+      </div>
+    </div>
+    <div class="artifact">
+      <div class="meta">
+        <span class="hallmark">Essay &middot; In Progress</span>
+        <h3>Agents as the interface</h3>
+      </div>
+      <div class="body">
+        <p>Using your computer primarily through agents as the interface - you orchestrate the agent, and the agent navigates the system for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-head">
+      <span class="hallmark">04 &middot; Development</span>
+      <h2>Credentials</h2>
+    </div>
+    <div class="cred">
+      <div style="margin-bottom:10px;">
+        <span class="provenance">PMP &middot; 2024</span>
+        <span class="provenance">Google &middot; ADK Agents</span>
+        <span class="provenance">Google &middot; Gemini Enterprise</span>
+        <span class="provenance">Azure Fundamentals</span>
+        <span class="provenance">BComm &middot; Honours &middot; U of Windsor</span>
+      </div>
+      <p>Project Management Professional (PMP), Project Management Institute, 2024.</p>
+      <p>Engineer AI Agents with Agent Development Kit (ADK), Google, 2026.</p>
+      <p>Create Your First Gemini Enterprise Application, Google, 2026.</p>
+      <p>Microsoft Azure Fundamentals, Seneca Polytechnic, 2023.</p>
+      <p>Zapier automation certificates - Build Your First Zap, Automate Your Work, Customize Your Zap - 2025.</p>
+      <p>Prompt Engineering with ChatGPT, LinkedIn Learning, 2025.</p>
+      <p>Bachelor of Commerce, Honours Business Administration, University of Windsor.</p>
+      <p>10+ years in enterprise technology: partner ecosystems, product line management, and go-to-market.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; Ikenna Nwakwesi &middot; BA$H</span>
+  </footer>
+</div>
+</body>
+</html>
