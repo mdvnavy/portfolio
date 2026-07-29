@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ikenna Nwakwesi - Product Manager & Systems Operator</title>
-<meta name="description" content="Ikenna 'Navy' Nwakwesi - Product Manager and Systems Operator: integrations, platform, and AI. Builder and operator of agentic infrastructure. Currently building BA$H.">
+<title>Ikenna Nwakwesi - Product, Sales &amp; Marketing AI Systems Operator</title>
+<meta name="description" content="Ikenna 'Navy' Nwakwesi - AI systems operator across product, sales and marketing. Builder and operator of agentic infrastructure. Currently building BA$H.">
 <style>
   @font-face{font-family:'Archivo';font-style:normal;font-weight:400 900;font-stretch:62% 125%;font-display:swap;src:url('fonts/archivo-normal-400_900.woff2') format('woff2');}
   @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/cormorantgaramond-italic-400.woff2') format('woff2');}
@@ -24,7 +24,6 @@
     --grotesk:'Söhne Breit','Archivo',sans-serif;
     --elev1:0 1px 4px #2A1F1714; --elev2:0 6px 18px #2A1F1722;
   }
-  /* dark overrides, explicit to avoid var typos */
   @media (prefers-color-scheme: dark){
     :root{
       --neutral:#1B130D; --surface:#3A2D22; --surface-c:#4A3A2C;
@@ -40,260 +39,425 @@
     font-family:var(--serif-text); font-size:17px; line-height:1.55;
     -webkit-font-smoothing:antialiased; position:relative;
   }
-  /* substrate grain - part of the identity */
   body::before{
     content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.06;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  .wrap{max-width:1080px;margin:0 auto;padding:72px 28px 44px;position:relative;z-index:2;}
+  .wrap{max-width:1140px;margin:0 auto;padding:64px 28px 44px;position:relative;z-index:2;}
+
+  /* ---- page-long two-column: content left, rail rides the right ---- */
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 296px;gap:64px;align-items:start;}
+  .rail{position:sticky;top:40px;display:flex;flex-direction:column;gap:16px;}
+
   .hallmark{
     font-family:var(--grotesk); font-stretch:62%; font-weight:700;
-    font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--secondary);
+    font-size:.8125rem; letter-spacing:.1em; text-transform:uppercase; color:var(--secondary);
   }
-  /* --- hero: asymmetric 7/5 --- */
-  .hero{display:grid;grid-template-columns:7fr 5fr;gap:44px;align-items:end;margin-bottom:72px;}
   h1{
-    font-family:var(--serif); font-size:clamp(3rem,8.5vw,5.5rem); font-weight:500;
-    line-height:.95; letter-spacing:-.025em; margin:18px 0 12px;
+    font-family:var(--serif); font-size:clamp(3rem,7vw,4.75rem); font-weight:500;
+    line-height:.95; letter-spacing:-.025em; margin:16px 0 12px;
     font-feature-settings:"liga","dlig";
   }
   .role{
     font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:1rem;
     letter-spacing:.04em; text-transform:uppercase; color:var(--tertiary); margin:0 0 18px;
   }
-  .intro{font-size:1.125rem;max-width:56ch;margin:0;}
-  .hero-side{display:flex;flex-direction:column;gap:12px;}
+  .intro{font-size:1.125rem;max-width:60ch;margin:0;}
+
+  /* ---- rail contents ---- */
   .now-card{
     background:var(--surface); border:1px solid var(--outline);
-    border-radius:28px 4px 28px 4px; padding:28px; box-shadow:var(--elev2);
+    border-radius:20px 4px 20px 4px; padding:20px 24px; box-shadow:var(--elev1);
+    max-width:60ch; margin:24px 0 0;
   }
   .now-card .hallmark{color:var(--quaternary);}
-  .now-card p{margin:8px 0 0;font-size:.9375rem;}
+  .now-card p{margin:8px 0 0;font-size:1rem;line-height:1.5;}
   .now-card a{color:var(--primary);text-decoration-color:var(--quaternary);text-underline-offset:3px;}
   .now-card a:hover{color:var(--tertiary);}
-  .links{display:flex;gap:6px;flex-wrap:wrap;}
+
+  /* ---- the tree: roots drawn in CSS so they always align ---- */
+  .tree{
+    background:var(--surface); border:1px solid var(--outline);
+    border-radius:20px 4px 20px 4px; padding:20px 20px 18px; box-shadow:var(--elev2);
+  }
+  .tree .root{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.8125rem;
+    letter-spacing:.08em; color:var(--primary); display:block; margin-bottom:10px;
+  }
+  .tree ul{list-style:none;margin:0;padding:0;}
+  .tree > ul{padding-left:2px;}
+  .tree ul ul{
+    margin:2px 0 4px 7px; padding-left:16px;
+    border-left:1px solid var(--outline);
+  }
+  .tree li{position:relative;}
+  /* horizontal tick into each child */
+  .tree ul ul > li::before{
+    content:""; position:absolute; left:-16px; top:.82em;
+    width:11px; height:1px; background:var(--outline);
+  }
+  /* mask the trunk below the last child so the root terminates */
+  .tree ul ul > li:last-child::after{
+    content:""; position:absolute; left:-17px; top:calc(.82em + 1px);
+    bottom:0; width:2px; background:var(--surface);
+  }
+  .tree a{
+    display:block; text-decoration:none; padding:4px 8px; border-radius:4px;
+    transition:background .18s ease, color .18s ease;
+  }
+  .tree .dir{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.8125rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--secondary);
+  }
+  .tree .dir .n{color:var(--quaternary);margin-right:7px;}
+  .tree .leaf{
+    font-family:var(--serif-text); font-size:.9375rem; color:var(--secondary);
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+  }
+  .tree .leaf .t{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.75rem;
+    letter-spacing:.06em; color:var(--quaternary); white-space:nowrap;
+  }
+  .tree a:hover{background:var(--surface-c);color:var(--primary);}
+  .tree a.on{background:var(--patina);color:#2A1F17;}
+  .tree a.on .n,.tree a.on .t{color:#2A1F17;}
+
+  .links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px;}
   .links a{
-    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.6875rem;
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.8125rem;
     letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
-    background:var(--patina); color:#2A1F17; border-radius:999px; padding:8px 16px;
+    background:var(--patina); color:#2A1F17; border-radius:999px; padding:9px 16px;
     transition:background .28s cubic-bezier(.34,1.56,.64,1), transform .28s cubic-bezier(.34,1.56,.64,1);
   }
   .links a:hover{background:var(--tertiary-c);transform:translateY(-2px);}
-  /* --- sections --- */
-  section{margin-top:72px;}
+
+  /* ---- sections ---- */
+  section{margin-top:72px;scroll-margin-top:32px;}
+  .entry,.artifact{scroll-margin-top:40px;}
   .epigraph{
-    margin:64px 0 0; padding:0 0 0 24px; border-left:3px solid var(--quaternary);
-    font-family:var(--serif); font-size:1.55rem; line-height:1.3; font-style:italic; max-width:34ch;
+    margin:56px 0 0; padding:0 0 0 24px; border-left:3px solid var(--quaternary);
+    font-family:var(--serif); font-size:1.5rem; line-height:1.3; font-style:italic; max-width:38ch;
   }
   .also{background:var(--surface-c);border:1px solid var(--outline);border-radius:20px;padding:18px 22px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
   .also .hallmark{margin-right:10px;}
-  .sect-head{display:grid;grid-template-columns:4fr 8fr;gap:28px;align-items:baseline;border-top:2px solid var(--primary);padding-top:12px;margin-bottom:28px;}
-  h2{font-family:var(--serif);font-size:2.125rem;font-weight:500;letter-spacing:-.015em;line-height:1.15;margin:0;}
-  .sect-head .hallmark{padding-top:6px;}
+  .sect-head{border-top:2px solid var(--primary);padding-top:12px;margin-bottom:28px;}
+  .sect-head .hallmark{display:block;margin-bottom:6px;}
+  h2{font-family:var(--serif);font-size:2rem;font-weight:500;letter-spacing:-.015em;line-height:1.15;margin:0;}
+
+  /* ---- build log ---- */
+  .log{border-left:2px solid var(--outline);padding-left:28px;margin-left:4px;}
+  .entry{margin-bottom:44px;}
+  .entry:last-child{margin-bottom:0;}
+  .entry-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px;}
+  .entry h3{font-family:var(--serif);font-size:1.55rem;font-weight:500;line-height:1.15;margin:0;}
+  .elapsed{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.8125rem;
+    letter-spacing:.1em; text-transform:uppercase; color:#2A1F17;
+    background:var(--quaternary); border-radius:2px; padding:4px 9px; white-space:nowrap;
+  }
+  .when{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:500; font-size:.8125rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--secondary);
+  }
+  .entry .note{font-size:1.0625rem;margin:10px 0 0;max-width:62ch;}
+  .rows{margin:14px 0 0;display:grid;grid-template-columns:auto 1fr;gap:2px 18px;}
+  .rows dt{
+    font-family:var(--grotesk); font-stretch:62%; font-weight:700; font-size:.8125rem;
+    letter-spacing:.08em; color:var(--quaternary); padding-top:5px; white-space:nowrap;
+  }
+  .rows dd{margin:0;font-size:1.0625rem;line-height:1.5;}
+
+  /* ---- artifact cards ---- */
   .artifact{
     position:relative;
     background:var(--surface); border:1px solid var(--outline);
-    border-radius:28px 4px 28px 4px; padding:58px 28px 28px; margin-bottom:18px; box-shadow:var(--elev1);
-    display:grid; grid-template-columns:5fr 7fr; gap:28px;
+    border-radius:24px 4px 24px 4px; padding:52px 26px 26px; margin-bottom:18px; box-shadow:var(--elev1);
     transition:box-shadow .32s ease, transform .32s ease;
   }
-  .artifact:nth-of-type(even){grid-template-columns:7fr 5fr;border-radius:4px 28px 4px 28px;}
+  .artifact:nth-of-type(even){border-radius:4px 24px 4px 24px;}
   .artifact:hover{box-shadow:var(--elev2);transform:translateY(-2px) rotate(.2deg);}
-  .artifact .meta .hallmark{position:absolute;top:26px;left:28px;right:28px;}
-  .artifact h3{font-family:var(--serif);font-size:1.9rem;font-weight:500;line-height:1.1;margin:0;}
-  .artifact .meta{align-self:start;}
-  .artifact .body{padding-top:8px;}
-  .artifact .body p{margin:0 0 10px;font-size:.9375rem;}
+  .artifact .meta .hallmark{position:absolute;top:24px;left:26px;right:26px;}
+  .artifact h3{font-family:var(--serif);font-size:1.7rem;font-weight:500;line-height:1.15;margin:0 0 10px;}
+  .artifact .body p{margin:0 0 10px;font-size:1.0625rem;max-width:66ch;}
   .artifact .body p:last-child{margin:0;}
   .artifact a{color:var(--primary);text-decoration-color:var(--quaternary);text-underline-offset:3px;}
   .artifact a:hover{color:var(--tertiary);}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px;}
   .chip{
-    font-family:var(--grotesk); font-stretch:62%; font-weight:500; font-size:.6875rem;
+    font-family:var(--grotesk); font-stretch:62%; font-weight:500; font-size:.8125rem;
     letter-spacing:.06em; text-transform:uppercase;
     background:var(--patina); color:#2A1F17; border-radius:999px; padding:5px 12px;
   }
   .provenance{
     display:inline-block; font-family:var(--grotesk); font-stretch:62%; font-weight:700;
-    font-size:.6875rem; letter-spacing:.06em; text-transform:uppercase;
+    font-size:.8125rem; letter-spacing:.06em; text-transform:uppercase;
     background:var(--quaternary); color:#EFE7D7; border-radius:2px; padding:4px 10px; margin:0 8px 8px 0;
   }
   .cred{background:var(--surface-c);border:1px solid var(--outline);border-radius:20px;padding:22px 24px;}
-  .cred p{margin:6px 0;font-size:.9375rem;}
+  .cred p{margin:6px 0;font-size:1.0625rem;}
   footer{
-    margin-top:96px;border-top:1px solid var(--outline);padding-top:18px;
+    margin-top:88px;border-top:1px solid var(--outline);padding-top:18px;
     display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    font-family:var(--grotesk);font-stretch:62%;font-size:.6875rem;font-weight:500;
+    font-family:var(--grotesk);font-stretch:62%;font-size:.8125rem;font-weight:500;
     letter-spacing:.06em;text-transform:uppercase;color:var(--secondary);
   }
-  @media(max-width:768px){
-    .hero,.artifact,.artifact:nth-of-type(even),.sect-head{grid-template-columns:1fr;gap:16px;}
+
+  @media(max-width:900px){
+    .layout{grid-template-columns:1fr;gap:32px;}
+    .rail{position:static;order:2;}
+    .main{order:1;}
     .wrap{padding-top:44px;}
-    .artifact{padding-top:28px;}
+    .artifact{padding-top:26px;}
     .artifact .meta .hallmark{position:static;display:block;margin-bottom:8px;}
-    .artifact .body{padding-top:0;}
+    .rows{grid-template-columns:1fr;gap:0;}
+    .rows dt{padding-top:10px;}
+    .log{padding-left:18px;}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
+<div class="layout">
 
-  <header class="hero">
-    <div>
+  <!-- ═══════════ CONTENT ═══════════ -->
+  <main class="main">
+
+    <header>
       <span class="hallmark" style="color:var(--quaternary)">Portfolio &middot; MMXXVI &middot; Est. Toronto</span>
       <h1>Ikenna &ldquo;Navy&rdquo;<br>Nwakwesi</h1>
-      <p class="role">Product Manager &amp; Systems Operator - Integrations, Platform &amp; AI</p>
+      <p class="role">Product, Sales &amp; Marketing - AI Systems Operator</p>
       <p class="intro">10+ years managing partner ecosystems and product lines for enterprise technology vendors, B2B and B2C. An interest in design and data analysis led me to teach myself the technical implementation, and now I ship agentic AI systems hands-on: the data layers, the tool-use interfaces, and the infrastructure they run on.</p>
-    </div>
-    <div class="hero-side">
+
       <div class="now-card">
         <span class="hallmark">Currently Building</span>
         <p><a href="https://bashsystems.net" target="_blank" rel="noopener">BA$H - born again systems</a>: AI-native workflow automation for founders, ops teams, and agencies. Turnkey agents and integrations deployed on the client&rsquo;s own infrastructure, with hosted ops for lightweight workflows.</p>
       </div>
-      <div class="links">
-        <a href="https://github.com/mdvnavy" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/ikennanwakwesi" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:nwakwesi@gmail.com">Email</a>
+
+      <blockquote class="epigraph">The model is only 10%. The other 90% is the system you build around it - the validation, the context, the harness. Code is not typed; intent is orchestrated.</blockquote>
+    </header>
+
+    <section id="log">
+      <div class="sect-head">
+        <span class="hallmark">01 &middot; Build log</span>
+        <h2>Recent builds, with elapsed time</h2>
       </div>
-    </div>
-  </header>
 
-  <blockquote class="epigraph">The model is only ten percent. The other ninety is the system you build around it - the validation, the context, the harness. Code is not typed; intent is orchestrated.</blockquote>
+      <div class="log">
 
-  <section>
-    <div class="sect-head">
-      <span class="hallmark">01 &middot; Flagship</span>
-      <h2>Dia - Discovery Intake Agent</h2>
-    </div>
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Google for Startups AI Agents Challenge</span>
-        <h3>Questionnaire in. Scored opportunity and three documents out.</h3>
-        <div class="chips">
-          <span class="chip">Gemini ADK</span><span class="chip">Cloud Run</span><span class="chip">Voice UI</span><span class="chip">Evals</span>
+        <div class="entry" id="amazon-ads">
+          <div class="entry-head">
+            <h3>Amazon Ads reporting platform</h3>
+            <span class="elapsed">8h 03m</span>
+          </div>
+          <span class="when">2026-07-27 18:34 &rarr; 07-28 02:37 &middot; overnight</span>
+          <p class="note">API access approved on the Friday. From a verified install to a queryable platform with its own query layer and a written runbook, in one sitting.</p>
+          <dl class="rows">
+            <dt>18:34</dt><dd>Install and config paths verified.</dd>
+            <dt>23:53</dt><dd>v1 API client - request, poll, download.</dd>
+            <dt>00:41</dt><dd>DuckDB single-file store, own MCP server, Parquet durable layer.</dd>
+            <dt>00:57</dt><dd>Console-export ingest path; end-to-end runbook written.</dd>
+            <dt>01:07</dt><dd>MCP global registration, portable wiring.</dd>
+            <dt>01:17</dt><dd>Nineteen months of spend and ROAS charted.</dd>
+            <dt>02:01</dt><dd>Full daily backfill; term history to January 2025.</dd>
+            <dt>02:12</dt><dd>Operating rules and live-verified API quirks documented.</dd>
+            <dt>02:37</dt><dd>Bucketing fix - a term that converts anywhere never enters a negate list.</dd>
+          </dl>
+        </div>
+
+        <div class="entry" id="sales-intel">
+          <div class="entry-head">
+            <h3>Commercial sales-intelligence system</h3>
+            <span class="elapsed">~18 hours</span>
+          </div>
+          <span class="when">Concept to verified product &middot; constrained hardware</span>
+          <p class="note">An enterprise commercial dataset - six figures of transaction records - made queryable in plain English. Parquet columnar storage on an embedded DuckDB engine, Python and pandas ingestion with normalization and deduplication, a unified SQL view, and a Model Context Protocol server exposing the whole thing as tools to an AI assistant.</p>
+        </div>
+
+        <div class="entry" id="memory-backups">
+          <div class="entry-head">
+            <h3>Hourly memory backups</h3>
+            <span class="elapsed">~70 minutes</span>
+          </div>
+          <span class="when">2026-03-09 &middot; request at 06:10, running before 08:00</span>
+          <p class="note">Noticed work going missing and said so out loud at 06:10. The script was written in the same session, with retention and offsite sync; the first scheduled run fired about seventy minutes later. It has run 118 times since.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="dia">
+      <div class="sect-head">
+        <span class="hallmark">02 &middot; Flagship</span>
+        <h2>Dia - Discovery Intake Agent</h2>
+      </div>
+      <div class="artifact" id="dia-agent">
+        <div class="meta"><span class="hallmark">Google for Startups AI Agents Challenge</span></div>
+        <div class="body">
+          <h3>Questionnaire in. Scored opportunity and three documents out.</h3>
+          <div class="chips">
+            <span class="chip">Gemini ADK</span><span class="chip">Cloud Run</span><span class="chip">Voice UI</span><span class="chip">Evals</span>
+          </div>
+          <p><strong>First commit 2026-06-06. Deadline 2026-06-11, 20:00 EDT. Five days.</strong></p>
+          <p>Dia turns a client discovery questionnaire into a scored opportunity and three ready-to-send documents: client profile, opportunity analysis, and proposal draft.</p>
+          <p>What shipped inside those five days: a fully deterministic scoring and document pipeline; a Gemini LlmAgent that uses those deterministic functions as tools and degrades gracefully without an API key; a dependency-free voice-enabled UI with TTS, dictation and hands-free mode; a pytest suite; an eval directory; a Dockerfile; one-command Cloud Run deploy; a security policy; and secret scanning.</p>
+          <p>Code: <a href="https://github.com/mdvnavy/Dia" target="_blank" rel="noopener">github.com/mdvnavy/Dia</a></p>
         </div>
       </div>
-      <div class="body">
-        <p>Dia turns a client discovery questionnaire into a scored opportunity and three ready-to-send documents: client profile, opportunity analysis, and proposal draft.</p>
-        <p>Dual architecture: a fully deterministic scoring and document pipeline, plus a Gemini LlmAgent that uses those deterministic functions as tools and degrades gracefully without an API key. Ships with a dependency-free voice-enabled UI (TTS, dictation, hands-free mode), a pytest suite, an eval directory, a Dockerfile, and one-command Cloud Run deploy.</p>
-        <p>Run like a product, not a script: PM board, status directory, security policy, secret scanning, and 17 tracked issues.</p>
-        <p>Code: <a href="https://github.com/mdvnavy/Dia" target="_blank" rel="noopener">github.com/mdvnavy/Dia</a></p>
-      </div>
-    </div>
-  </section>
 
-  <section>
-    <div class="sect-head">
-      <span class="hallmark">02 &middot; Case Studies</span>
-      <h2>Systems in production</h2>
-    </div>
+      <div class="artifact" id="dia-tools">
+        <div class="meta"><span class="hallmark">Built inside the same five days</span></div>
+        <div class="body">
+          <h3>Two tools built to avoid doing things by hand</h3>
+          <div class="chips"><span class="chip">PRESS</span><span class="chip">obs-websocket</span><span class="chip">26 tests</span></div>
+          <p><strong>PRESS</strong> - first commit 2026-06-07, one day into the deadline window. A content-formatting engine built to produce the submission materials themselves. 47 commits over five days; its last commit before the deadline was the asset drop - thumbnail, headers, title card.</p>
+          <p><strong>The capture client</strong> - 2026-06-09, 00:54. Rather than record the demo by hand, a direct <code>obs-websocket</code> client wired into the agent runtime, landed at 01:01 and constrained to local-only by 02:37. Dependencies pinned to the patch version, 26 passing tests in the same commits, and a deliberate contract: after a successful intake, fire a screenshot and a replay-buffer save, and swallow failures so capture can never break the response.</p>
+          <p>Then the demo was recorded by hand anyway, through seven failed takes including full-screen captures coming out pure black. The take landed 02:46; the narrated cut was done by 03:05. The deadline does not care what you automated.</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Data Platform &middot; MCP</span>
-        <h3>Commercial sales-intelligence system + MCP query layer</h3>
-        <div class="chips"><span class="chip">DuckDB</span><span class="chip">Parquet</span><span class="chip">Python</span><span class="chip">MCP</span></div>
+    <section id="systems">
+      <div class="sect-head">
+        <span class="hallmark">03 &middot; Case Studies</span>
+        <h2>Systems in production</h2>
       </div>
-      <div class="body">
-        <p>An enterprise commercial dataset of 700,000+ transaction records, made queryable in plain English. Parquet columnar storage on an embedded DuckDB engine, Python and pandas ingestion with normalization and deduplication, a unified SQL view, and a Model Context Protocol server exposing it all as tools to an AI assistant.</p>
-        <p>Concept to verified product in roughly 18 hours on constrained hardware.</p>
-      </div>
-    </div>
 
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Infrastructure &middot; Networking</span>
-        <h3>Private agentic infrastructure - LTM mesh over Tailscale</h3>
-        <div class="chips"><span class="chip">Tailscale</span><span class="chip">WireGuard</span><span class="chip">3-VPS Fleet</span></div>
+      <div class="artifact" id="tailnet">
+        <div class="meta"><span class="hallmark">Infrastructure &middot; Networking</span></div>
+        <div class="body">
+          <h3>Private agentic infrastructure - LTM mesh over Tailscale</h3>
+          <div class="chips"><span class="chip">Tailscale</span><span class="chip">WireGuard</span><span class="chip">3-VPS Fleet</span></div>
+          <p>A 3-server VPS agent fleet on a private Tailscale mesh (WireGuard, ACLs, MagicDNS) running multiple agent runtimes per server, with self-served artifacts to mobile and integrated search and scraping services.</p>
+          <p>I connected a vendor&rsquo;s long-term memory product over the tailnet before their integration guide existed, rejected their public-tunnel recommendation in favor of a zero-exposure architecture, and debugged an undocumented TLS SNI requirement along the way.</p>
+        </div>
       </div>
-      <div class="body">
-        <p>A 3-server VPS agent fleet on a private Tailscale mesh (WireGuard, ACLs, MagicDNS) running multiple agent runtimes per server, with self-served artifacts to mobile and integrated search and scraping services.</p>
-        <p>I connected a vendor&rsquo;s long-term memory product over the tailnet before their integration guide existed, rejected their public-tunnel recommendation in favor of a zero-exposure architecture, and debugged an undocumented TLS SNI requirement along the way.</p>
-      </div>
-    </div>
 
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Distribution &middot; Developer Platform</span>
-        <h3>Agent Eggs - a portable skill store</h3>
-        <div class="chips"><span class="chip">SKILL.md</span><span class="chip">Hugging Face</span><span class="chip">Registry</span></div>
+      <div class="artifact" id="agent-eggs">
+        <div class="meta"><span class="hallmark">Distribution &middot; Developer Platform</span></div>
+        <div class="body">
+          <h3>Agent Eggs - a portable skill store</h3>
+          <div class="chips"><span class="chip">SKILL.md</span><span class="chip">Hugging Face</span><span class="chip">Registry</span></div>
+          <p>A distribution model for agent capabilities: skills packaged as versioned SKILL.md modules with runtime metadata, published to a Hugging Face dataset registry, and consumed by agents across the fleet.</p>
+          <p>Production skills covering the Google Workspace surface, plus a registry-of-registries index. Effectively a plugin model and developer on-ramp for agents.</p>
+        </div>
       </div>
-      <div class="body">
-        <p>A distribution model for agent capabilities: skills packaged as versioned SKILL.md modules with runtime metadata, published to a Hugging Face dataset registry, and consumed by agents across the fleet.</p>
-        <p>Fourteen production skills covering the Google Workspace surface, plus a registry-of-registries index. Effectively a plugin model and developer on-ramp for agents.</p>
-      </div>
-    </div>
 
-    <div class="also">
-      <span class="hallmark">Also shipped</span>
-      <span class="chip">Billin$ &middot; invoice automation</span>
-      <span class="chip">PRESS &middot; dossier engine</span>
-      <span class="chip">Fleet-Kit &middot; agent registry</span>
-      <span class="chip">Content curation pipeline</span>
-    </div>
-  </section>
+      <div class="also">
+        <span class="hallmark">Also shipped</span>
+        <span class="chip">Billin$ &middot; invoice automation</span>
+        <span class="chip">Fleet-Kit &middot; agent registry</span>
+        <span class="chip">Content curation pipeline</span>
+      </div>
+    </section>
 
-  <section>
-    <div class="sect-head">
-      <span class="hallmark">03 &middot; Scratch</span>
-      <h2>WIPS</h2>
-    </div>
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Essay &middot; In Progress</span>
-        <h3>Learning what code can do</h3>
+    <section id="wips">
+      <div class="sect-head">
+        <span class="hallmark">04 &middot; Scratch</span>
+        <h2>WIPS</h2>
       </div>
-      <div class="body">
-        <p>Coming to code from design and data, you don&rsquo;t see a developer&rsquo;s tool - you see something with no ceiling: administration, organization, research, a dozen uses nobody thinks to apply it to. And on the moment it clicks: I can figure this out. No roadmap, just reading, researching, and pulling threads.</p>
+      <div class="artifact">
+        <div class="meta"><span class="hallmark">Essay &middot; In Progress</span></div>
+        <div class="body">
+          <h3>Learning what code can do</h3>
+          <p>Coming to code from design and data, you don&rsquo;t see a developer&rsquo;s tool - you see something with no ceiling: administration, organization, research, a dozen uses nobody thinks to apply it to. And on the moment it clicks: I can figure this out. No roadmap, just reading, researching, and pulling threads.</p>
+        </div>
       </div>
-    </div>
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Essay &middot; In Progress</span>
-        <h3>The tailnet you already have</h3>
+      <div class="artifact">
+        <div class="meta"><span class="hallmark">Essay &middot; In Progress</span></div>
+        <div class="body">
+          <h3>Agents as the interface</h3>
+          <p>Using your computer primarily through agents as the interface - you orchestrate the agent, and the agent navigates the system for you.</p>
+        </div>
       </div>
-      <div class="body">
-        <p>Notes from wiring a long-term memory service into a private mesh before the vendor published their integration guide. Their version suggested a public tunnel; mine never left the tailnet. A quiet case for private-by-default agent infrastructure.</p>
-      </div>
-    </div>
-    <div class="artifact">
-      <div class="meta">
-        <span class="hallmark">Essay &middot; In Progress</span>
-        <h3>Agents as the interface</h3>
-      </div>
-      <div class="body">
-        <p>Using your computer primarily through agents as the interface - you orchestrate the agent, and the agent navigates the system for you.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="sect-head">
-      <span class="hallmark">04 &middot; Development</span>
-      <h2>Credentials</h2>
-    </div>
-    <div class="cred">
-      <div style="margin-bottom:10px;">
-        <span class="provenance">U of T SCS &middot; Project Management &middot; 2024</span>
-        <span class="provenance">Google &middot; ADK Agents</span>
-        <span class="provenance">Google &middot; Gemini Enterprise</span>
-        <span class="provenance">Azure Fundamentals</span>
-        <span class="provenance">BComm &middot; Honours &middot; U of Windsor</span>
+    <section id="credentials">
+      <div class="sect-head">
+        <span class="hallmark">05 &middot; Development</span>
+        <h2>Credentials</h2>
       </div>
-      <p>Project Management certificate, University of Toronto School of Continuing Studies, 2024.</p>
-      <p>Engineer AI Agents with Agent Development Kit (ADK), Google, 2026.</p>
-      <p>Create Your First Gemini Enterprise Application, Google, 2026.</p>
-      <p>Microsoft Azure Fundamentals, Seneca Polytechnic, 2023.</p>
-      <p>Zapier automation certificates - Build Your First Zap, Automate Your Work, Customize Your Zap - 2025.</p>
-      <p>Prompt Engineering with ChatGPT, LinkedIn Learning, 2025.</p>
-      <p>Bachelor of Commerce, Honours Business Administration, University of Windsor.</p>
-      <p>10+ years in enterprise technology: partner ecosystems, product line management, and go-to-market.</p>
-    </div>
-  </section>
+      <div class="cred">
+        <div style="margin-bottom:10px;">
+          <span class="provenance">U of T SCS &middot; Project Management &middot; 2024</span>
+          <span class="provenance">Google &middot; ADK Agents</span>
+          <span class="provenance">Google &middot; Gemini Enterprise</span>
+          <span class="provenance">Azure Fundamentals</span>
+          <span class="provenance">BComm &middot; Honours &middot; U of Windsor</span>
+        </div>
+        <p>Project Management certificate, University of Toronto School of Continuing Studies, 2024.</p>
+        <p>Engineer AI Agents with Agent Development Kit (ADK), Google, 2026.</p>
+        <p>Create Your First Gemini Enterprise Application, Google, 2026.</p>
+        <p>Microsoft Azure Fundamentals, Seneca Polytechnic, 2021.</p>
+        <p>Zapier automation certificates - Build Your First Zap, Automate Your Work, Customize Your Zap - 2025.</p>
+        <p>Prompt Engineering with ChatGPT, LinkedIn, 2025.</p>
+        <p>Bachelor of Commerce, Honours Business Administration, University of Windsor, 2010-2015.</p>
+        <p>10+ years in enterprise technology: partner ecosystems, product line management, and go-to-market.</p>
+      </div>
+    </section>
 
-  <footer>
-    <span>&copy; Ikenna Nwakwesi &middot; BA$H</span>
-  </footer>
+    <footer>
+      <span>&copy; Ikenna Nwakwesi &middot; BA$H</span>
+    </footer>
+
+  </main>
+
+  <!-- ═══════════ RAIL ═══════════ -->
+  <aside class="rail">
+    <nav class="tree">
+      <span class="root">nwakwesi/</span>
+      <ul>
+        <li>
+          <a class="dir" href="#log"><span class="n">01</span>build-log</a>
+          <ul>
+            <li><a class="leaf" href="#amazon-ads">amazon-ads <span class="t">8h03m</span></a></li>
+            <li><a class="leaf" href="#sales-intel">sales-intelligence <span class="t">18h</span></a></li>
+            <li><a class="leaf" href="#memory-backups">memory-backups <span class="t">70m</span></a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="dir" href="#dia"><span class="n">02</span>dia</a>
+          <ul>
+            <li><a class="leaf" href="#dia-agent">discovery-intake <span class="t">5d</span></a></li>
+            <li><a class="leaf" href="#dia-tools">press + capture</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="dir" href="#systems"><span class="n">03</span>systems</a>
+          <ul>
+            <li><a class="leaf" href="#tailnet">tailnet-mesh</a></li>
+            <li><a class="leaf" href="#agent-eggs">agent-eggs</a></li>
+          </ul>
+        </li>
+        <li><a class="dir" href="#wips"><span class="n">04</span>wips</a></li>
+        <li><a class="dir" href="#credentials"><span class="n">05</span>credentials</a></li>
+      </ul>
+    </nav>
+
+    <div class="links">
+      <a href="https://github.com/mdvnavy" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/ikennanwakwesi" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:navy@cultivatedco.ca">Email</a>
+    </div>
+  </aside>
+
 </div>
+</div>
+
+<script>
+  // mark the section you're in
+  (function(){
+    var links = [].slice.call(document.querySelectorAll('.tree a'));
+    var secs  = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    if (!('IntersectionObserver' in window)) return;
+    var seen = new Map();
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ seen.set(e.target, e.intersectionRatio); });
+      var best = null, bestR = 0;
+      seen.forEach(function(r, el){ if (r > bestR){ bestR = r; best = el; } });
+      links.forEach(function(a, i){ a.classList.toggle('on', secs[i] === best && bestR > 0); });
+    }, { threshold:[0,.15,.4,.75,1], rootMargin:'-10% 0px -55% 0px' });
+    secs.forEach(function(s){ if (s) io.observe(s); });
+  })();
+</script>
 </body>
 </html>
