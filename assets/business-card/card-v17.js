@@ -705,13 +705,13 @@
         const outerGap = parseFloat(bodyStyle.rowGap) || 0;
         const innerGap = parseFloat(stageStyle.rowGap) || 0;
         const helper = document.getElementById('card-helper');
-        const maximum = Math.max(1, Math.min(900, viewportWidth - 32));
+        const maximum = Math.max(1, Math.min(compactLayout.matches ? 900 : 1080, viewportWidth - 32));
         const extraRows = compactLayout.matches ? mobileControls.getBoundingClientRect().height + mobileCaption.getBoundingClientRect().height + innerGap * 2 : 0;
         const reserve = toolbar.getBoundingClientRect().height + helper.getBoundingClientRect().height + verticalPadding + outerGap + innerGap + extraRows;
         const diagonalFactor = Math.hypot(1, 1 / 1.75);
         const spinWidth = Math.max(1, Math.min(maximum, (viewportHeight - reserve - 20) / diagonalFactor));
-        const restingWidth = Math.min(maximum, spinWidth * (compactLayout.matches ? 1.10 : 1.375));
-        // Desktop inspection is 25% larger than the reviewed 1.10 fit;
+        const restingWidth = Math.min(maximum, spinWidth * (compactLayout.matches ? 1.10 : 1.65));
+        // Desktop inspection is another 20% larger than the published 1.375 fit;
         // mobile and the finite trick retain their existing envelopes.
         document.documentElement.style.setProperty('--stage-width', restingWidth.toFixed(2) + 'px');
         document.documentElement.style.setProperty('--stage-height', (spinWidth * diagonalFactor + 16).toFixed(2) + 'px');
