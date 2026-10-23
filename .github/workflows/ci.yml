@@ -1,0 +1,40 @@
+# Gate CI baseline (proposal: dia-tia/ops/proposals/2026-10-23_ci-branch-protection.md).
+# Checks only. Nothing here deploys; the site deploys only via deploy-pages.yml (workflow_dispatch).
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # TODO(Gate): html-validate step is report-only (step-level continue-on-error, job stays green)
+    # because main has 3 pre-existing errors in index.html (doctype-style, aria-label-misuse,
+    # unique-landmark). Remove continue-on-error once fixed.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with: { node-version: "22" }
+      - name: html-validate (report-only)
+        continue-on-error: true
+        run: npx -y html-validate@11.17.0 index.html
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - name: Local references exist and CNAME is cultivatedco.ca
+        run: python3 .github/scripts/check_site.py .
