@@ -1,0 +1,59 @@
+# Gate: the ONLY way portfolio goes live (proposal section 4).
+# workflow_dispatch only, never on push. The `github-pages` environment requires
+# reviewer mdvnavy, and a deploy runs only after Ikenna's own verified "yes".
+# No cloud credentials; Pages uses the built-in OIDC token (id-token: write).
+name: deploy-pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      approval_ref:
+        description: "Where Ikenna's own approval is recorded (chat + time ET, quoted)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Check site
+        run: python3 .github/scripts/check_site.py .
+      - name: Assemble site (same files the legacy branch build served)
+        run: |
+          mkdir -p _site
+          rsync -a --exclude '.git' --exclude '.github' --exclude '_site' --exclude '*.md' ./ _site/
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Record approval reference
+        env:
+          APPROVAL_REF: ${{ inputs.approval_ref }}
+        run: 'echo "Approval reference: $APPROVAL_REF"'
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
