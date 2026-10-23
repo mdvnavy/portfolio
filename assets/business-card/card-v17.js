@@ -65,19 +65,37 @@
       const backFace = document.getElementById('card-back');
       const toolbar = document.getElementById('card-toolbar');
       const cardMain = document.getElementById('card-main');
+      const compactLayout = window.matchMedia('(max-width: 900px)');
+      const mobileControls = toolbar.querySelector('.card-controls');
+      const controlsHome = document.createComment('agent fleet: desktop controls position');
+      mobileControls.before(controlsHome);
+      const mobileCaption = document.createElement('p');
+      mobileCaption.id = 'card-mobile-caption';
+      mobileCaption.textContent = 'Interactive business card';
+      sceneContainer.after(mobileCaption);
+      function syncCompactLayout() {
+        if (compactLayout.matches) cardMain.insertBefore(mobileControls, sceneContainer);
+        else controlsHome.after(mobileControls);
+      }
+      syncCompactLayout();
+      compactLayout.addEventListener('change', () => { syncCompactLayout(); fitCardStage(); });
       let qrReturnFocus = null;
       let orbitPausedAt = null;
       let orbitResumeTimer = null;
       let pointerHeld = false;
       let keyboardFocusEngaged = false;
       let lastInputWasKeyboard = false;
+      let partyState = null;
+      let motionBounds = null;
+      let frameReady = false;
+      let fontsSettled = false;
 
       function interactiveTarget(element) {
         return element instanceof Element && element.closest('button,a,input,textarea,select,[contenteditable="true"]');
       }
 
       function orbitMustPause() {
-        return motionMode !== 'orbit' || reducedMotion.matches ||
+        return !frameReady || Boolean(partyState) || motionMode !== 'orbit' || reducedMotion.matches ||
           document.visibilityState === 'hidden' || pointerHeld ||
           keyboardFocusEngaged || isFlipping || !qrModal.classList.contains('hidden');
       }
@@ -125,7 +143,7 @@
       function syncFaceAccessibility() {
         const focused = document.activeElement;
         const hiddenFace = isFlipped ? frontFace : backFace;
-        if (focused && hiddenFace.contains(focused)) btnFlipCard.focus({preventScroll: true});
+        if (focused && hiddenFace.contains(focused)) (compactLayout.matches ? modeFlatBtn : btnFlipCard).focus({preventScroll: true});
         frontFace.inert = isFlipped;
         backFace.inert = !isFlipped;
         frontFace.setAttribute('aria-hidden', String(isFlipped));
@@ -142,6 +160,7 @@
       }
 
       function applyMotionPreference() {
+        finishPartyTrick('motion-preference');
         setMotionMode(reducedMotion.matches ? 'flat' : 'orbit');
         if (reducedMotion.matches) {
           clearTimeout(flipTimer);
@@ -201,7 +220,7 @@
         pointerHeld = true;
         pauseOrbit();
         if (!(event.target instanceof Element)) return;
-        if (event.target.closest('#card-rig,#card-helper,#qr-modal>div,#toast-banner,#card-toolbar button,#card-toolbar a,#card-toolbar img,#card-toolbar h1,#side-indicator-text')) return;
+        if (event.target.closest('#card-rig,#card-helper,.card-controls,#card-mobile-caption,#qr-modal>div,#toast-banner,#card-toolbar button,#card-toolbar a,#card-toolbar img,#card-toolbar h1,#side-indicator-text')) return;
         requestHostClose();
       });
       window.addEventListener('pointerup', () => { pointerHeld = false; queueOrbitResume(); });
@@ -241,7 +260,7 @@
         queueOrbitResume();
       });
       document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden') pauseOrbit(); else queueOrbitResume();
+        if (document.visibilityState === 'hidden') { finishPartyTrick('hidden'); pauseOrbit(); } else queueOrbitResume();
       });
       reducedMotion.addEventListener('change', applyMotionPreference);
 
@@ -319,23 +338,32 @@
       }
 
       function settleCard() {
+        if (partyState) return;
         if (isFlipping || motionMode === 'orbit' || tiltX !== 0 || tiltY !== 0) return;
         cardRig.dataset.side = isFlipped ? 'back' : 'front';
         cardRig.classList.add('is-resting');
         cardRig.style.transform = 'none';
       }
 
-      function safeMotionScale(pitchDegrees, yawDegrees) {
+      // These layout bounds are stable between resize, font and hint updates.
+      // Keep DOM geometry reads outside the ordinary Orbit/drag frame loop.
+      function readMotionBounds() {
+        if (motionBounds) return motionBounds;
         const scene = sceneContainer.getBoundingClientRect();
-        const toolbar = document.getElementById('card-toolbar').getBoundingClientRect();
-        const helper = document.getElementById('card-helper').getBoundingClientRect();
-        const width = cardRig.offsetWidth;
-        const height = cardRig.offsetHeight;
+        const toolbarBox = toolbar.getBoundingClientRect();
+        const helperBox = document.getElementById('card-helper').getBoundingClientRect();
+        motionBounds = {
+          scene, width:cardRig.offsetWidth, height:cardRig.offsetHeight,
+          viewportWidth:document.documentElement.clientWidth,
+          topEdge:toolbarBox.bottom + 10, bottomEdge:helperBox.top - 10
+        };
+        return motionBounds;
+      }
+
+      function safeMotionScale(pitchDegrees, yawDegrees) {
+        const {scene,width,height,viewportWidth,topEdge,bottomEdge} = readMotionBounds();
         const centerX = scene.left + scene.width / 2;
         const centerY = scene.top + scene.height / 2;
-        const viewportWidth = document.documentElement.clientWidth;
-        const topEdge = toolbar.bottom + 10;
-        const bottomEdge = helper.top - 10;
         const pitch = pitchDegrees * Math.PI / 180;
         const yawValues = isFlipping ? [0, 30, 60, 90, 120, 150, 180] : [yawDegrees];
         function fits(scale) {
@@ -364,6 +392,7 @@
       }
 
       function renderCardTransform() {
+        if (partyState) return;
         clearTimeout(restTimer);
         const canSettle = !isFlipping && motionMode !== 'orbit' && tiltX === 0 && tiltY === 0;
         if (!canSettle) wakeCard();
@@ -396,6 +425,7 @@
       }
 
       function toggleFlip() {
+        if (partyState) return;
         pauseOrbit();
         if (reducedMotion.matches) {
           clearTimeout(flipTimer);
@@ -440,6 +470,7 @@
       }
 
       function setMotionMode(mode) {
+        if (partyState) return;
         clearTimeout(orbitResumeTimer);
         orbitResumeTimer = null;
         orbitPausedAt = null;
@@ -478,9 +509,10 @@
 
       
       function handlePointerMove(clientX, clientY, temporaryOrbitTouch = false) {
+        if (partyState) return;
         if ((motionMode !== 'tilt' && !(temporaryOrbitTouch && motionMode === 'orbit' && !reducedMotion.matches)) || isFlipping) return;
         clearTimeout(pointerIdleTimer);
-        const rect = sceneContainer.getBoundingClientRect();
+        const rect = readMotionBounds().scene;
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
         const dx = (clientX - cx) / (rect.width / 2);
@@ -508,6 +540,7 @@
       });
 
       sceneContainer.addEventListener('mouseleave', () => {
+        if (partyState) return;
         clearTimeout(pointerIdleTimer);
         cardRig.classList.remove('is-tilting');
         if (motionMode === 'tilt') {
@@ -543,6 +576,7 @@
       modeFlatBtn.addEventListener('click', () => setMotionMode('flat'));
 
       btnQuickReset.addEventListener('click', () => {
+        if (partyState) return;
         isFlipped = false;
         syncFaceAccessibility();
         btnFlipLabel.textContent = 'Flip to Back (QR Codes)';
@@ -558,6 +592,7 @@
 
       
       function openQrModal(which) {
+        if (partyState) return;
         pauseOrbit();
         qrReturnFocus = document.activeElement;
         if (which === 'bash') {
@@ -651,7 +686,7 @@
           requestHostClose();
           return;
         }
-        if (!qrModal.classList.contains('hidden')) return;
+        if (partyState || !qrModal.classList.contains('hidden')) return;
         if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
         if (e.target instanceof Element && e.target.closest('button,a,input,textarea,select,[contenteditable="true"]')) return;
         if (e.code === 'Space' || e.key === 'f' || e.key === 'F') {
@@ -661,6 +696,7 @@
       });
 
       function fitCardStage() {
+        finishPartyTrick('resized');
         const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
         const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
         const bodyStyle = getComputedStyle(document.body);
@@ -669,10 +705,44 @@
         const outerGap = parseFloat(bodyStyle.rowGap) || 0;
         const innerGap = parseFloat(stageStyle.rowGap) || 0;
         const helper = document.getElementById('card-helper');
-        const maximum = Math.max(1, Math.min(1200, viewportWidth - 24));
-        const reserve = toolbar.getBoundingClientRect().height + helper.getBoundingClientRect().height + verticalPadding + outerGap + innerGap;
-        const width = Math.max(1, Math.min(maximum, (viewportHeight - reserve) * 1.75));
-        document.documentElement.style.setProperty('--stage-width', width.toFixed(2) + 'px');
+        const maximum = Math.max(1, Math.min(900, viewportWidth - 32));
+        const extraRows = compactLayout.matches ? mobileControls.getBoundingClientRect().height + mobileCaption.getBoundingClientRect().height + innerGap * 2 : 0;
+        const reserve = toolbar.getBoundingClientRect().height + helper.getBoundingClientRect().height + verticalPadding + outerGap + innerGap + extraRows;
+        const diagonalFactor = Math.hypot(1, 1 / 1.75);
+        const spinWidth = Math.max(1, Math.min(maximum, (viewportHeight - reserve - 20) / diagonalFactor));
+        const restingWidth = Math.min(maximum, spinWidth * (compactLayout.matches ? 1.10 : 1.375));
+        // Desktop inspection is 25% larger than the reviewed 1.10 fit;
+        // mobile and the finite trick retain their existing envelopes.
+        document.documentElement.style.setProperty('--stage-width', restingWidth.toFixed(2) + 'px');
+        document.documentElement.style.setProperty('--stage-height', (spinWidth * diagonalFactor + 16).toFixed(2) + 'px');
+        document.documentElement.style.removeProperty('--card-content-height');
+        if (restingWidth < 400) {
+          // Compact cards retain every original row instead of cropping terms.
+          // This runs only at layout changes, never in the animation loop.
+          const contentHeight = Math.max(frontFace.scrollHeight, backFace.scrollHeight);
+          document.documentElement.style.setProperty('--card-content-height', (contentHeight + 2) + 'px');
+        }
+        document.documentElement.style.setProperty('--mobile-scene-height', (cardRig.offsetHeight + 20).toFixed(2) + 'px');
+        motionBounds = null;
+      }
+
+      function finishFrameInitialization() {
+        if (!fontsSettled || document.readyState !== 'complete') return;
+        fitCardStage();
+        if (frameReady) return;
+        if (motionMode === 'orbit') {
+          orbitStart = performance.now();
+          orbitPausedAt = null;
+          tiltX = 7;
+          tiltY = 0;
+        }
+        renderCardTransform();
+        // Commit final font metrics, width and first Orbit pose while hidden.
+        cardRig.getBoundingClientRect();
+        frameReady = true;
+        document.documentElement.dataset.cardReady = 'true';
+        if (window.parent !== window) window.parent.postMessage({type:'portfolio-card:ready'}, location.origin);
+        resumeOrbit();
       }
 
       window.addEventListener('resize', fitCardStage);
@@ -684,18 +754,180 @@
           document.fonts.load('500 16px "Inter"')
         ]).then((loaded) => document.fonts.ready.then(() => {
           document.documentElement.dataset.fontsReady = loaded.every((faces) => faces.length > 0 && faces.every((face) => face.status === 'loaded')) ? 'true' : 'false';
-          fitCardStage();
+          fontsSettled = true;
+          finishFrameInitialization();
         })).catch(() => {
           document.documentElement.dataset.fontsReady = 'false';
-          fitCardStage();
+          fontsSettled = true;
+          finishFrameInitialization();
         });
-      } else fitCardStage();
+      } else { fontsSettled = true; requestAnimationFrame(finishFrameInitialization); }
 
       
+      // Agent fleet preview Easter egg: one finite effect; no artwork changes.
+      const partyLogoImage = toolbar.querySelector(':scope > div:first-child > img');
+      const partyLogo = document.createElement('button');
+      partyLogo.type = 'button';
+      partyLogo.id = 'card-party-logo';
+      partyLogo.className = 'card-party-logo';
+      partyLogo.setAttribute('aria-label', 'BA$H logo. Play card party trick');
+      partyLogo.title = 'BA$H Systems';
+      partyLogo.dataset.partyState = 'idle';
+      partyLogo.dataset.partyRuns = '0';
+      partyLogoImage.before(partyLogo);
+      partyLogo.appendChild(partyLogoImage);
+      const partyStatus = document.createElement('span');
+      partyStatus.className = 'sr-only';
+      partyStatus.setAttribute('role', 'status');
+      partyStatus.setAttribute('aria-live', 'polite');
+      partyLogo.after(partyStatus);
+      let lastPartyTap = null;
+
+      function restoreAttribute(element, name, value) {
+        if (value === null) element.removeAttribute(name); else element.setAttribute(name, value);
+      }
+
+      function finishPartyTrick(reason = 'complete') {
+        if (!partyState) return;
+        const state = partyState;
+        clearTimeout(state.timer);
+        state.animations.forEach((animation) => animation.cancel());
+        state.layer.remove();
+        restoreAttribute(cardRig, 'class', state.rigClass);
+        restoreAttribute(cardRig, 'style', state.rigStyle);
+        restoreAttribute(cardRig, 'data-side', state.side);
+        cardRig.inert = state.rigInert;
+        state.controls.forEach(([button, disabled]) => { button.disabled = disabled; });
+        state.inertRegions.forEach(([element, inert]) => { element.inert = inert; });
+        tiltX = state.tiltX; tiltY = state.tiltY;
+        partyState = null;
+        partyLogo.removeAttribute('aria-disabled');
+        partyLogo.removeAttribute('aria-busy');
+        partyLogo.dataset.partyState = 'idle';
+        partyLogo.dataset.partyResult = reason;
+        partyStatus.textContent = reason === 'complete' ? 'Party trick finished. Card restored.' : '';
+        // Do not pull focus back from the host close control or a deliberate Tab.
+        if (document.hasFocus() && state.focus?.isConnected && (document.activeElement === partyLogo || document.activeElement === document.body)) {
+          state.focus.focus({preventScroll:true});
+        }
+        if (reason !== 'closed' && reason !== 'hidden') queueOrbitResume();
+      }
+
+      function startPartyTrick() {
+        if (partyState || document.visibilityState === 'hidden' || isFlipping || pointerHeld || !qrModal.classList.contains('hidden')) return;
+        finishOrbitTouchDrag();
+        pauseOrbit();
+        clearTimeout(restTimer);
+        clearTimeout(pointerIdleTimer);
+        const layer = document.createElement('div');
+        layer.className = 'card-party-layer';
+        layer.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(layer);
+        const state = {
+          rigClass: cardRig.getAttribute('class'), rigStyle: cardRig.getAttribute('style'),
+          side: cardRig.getAttribute('data-side'), rigInert: cardRig.inert,
+          tiltX, tiltY, focus: document.activeElement, layer, animations: [], timer: null,
+          controls: [...document.querySelectorAll('#card-toolbar button,.card-controls button')].filter((button) => button !== partyLogo).map((button) => [button, button.disabled]),
+          inertRegions: [document.getElementById('card-helper')].map((element) => [element, element.inert])
+        };
+        partyState = state;
+        partyLogo.dataset.partyState = 'running';
+        partyLogo.dataset.partyRuns = String(Number(partyLogo.dataset.partyRuns) + 1);
+        partyLogo.setAttribute('aria-disabled', 'true');
+        partyLogo.setAttribute('aria-busy', 'true');
+        cardRig.inert = true;
+        state.controls.forEach(([button]) => { button.disabled = true; });
+        state.inertRegions.forEach(([element]) => { element.inert = true; });
+        const quiet = reducedMotion.matches || typeof cardRig.animate !== 'function';
+        partyLogo.dataset.partyVariant = quiet ? 'reduced-motion' : 'corner-spin';
+        partyStatus.textContent = quiet ? 'Party trick: a little money shower. Motion reduced.' : 'Party trick: corner spin and a money shower.';
+        const toolbarBox = toolbar.getBoundingClientRect();
+        const helperBox = document.getElementById('card-helper').getBoundingClientRect();
+        const viewportWidth = document.documentElement.clientWidth;
+        const scene = sceneContainer.getBoundingClientRect();
+        const top = toolbarBox.bottom + 12, bottom = helperBox.top - 12;
+        const centerX = viewportWidth / 2, centerY = (top + bottom) / 2;
+        const billCount = quiet ? 5 : Math.min(12, Math.max(8, Math.floor(viewportWidth / 64)));
+        for (let i = 0; i < billCount; i += 1) {
+          const bill = document.createElement('span');
+          bill.className = 'card-party-bill';
+          bill.textContent = '$';
+          layer.appendChild(bill);
+          if (quiet) {
+            bill.style.left = `calc(50% + ${(i - 2) * 30}px)`;
+            bill.style.top = `${Math.min(bottom - 22, centerY + 40)}px`;
+            bill.style.transform = `rotate(${(i - 2) * 8}deg)`;
+          } else {
+            const x = 18 + ((i * .61803398875) % 1) * Math.max(0, viewportWidth - 72);
+            bill.style.left = `${x}px`;
+            bill.style.top = `${top - 16}px`;
+            const drift = (i % 2 ? 1 : -1) * Math.min(28, viewportWidth * .06);
+            state.animations.push(bill.animate([
+              {transform:`translate(0,0) rotate(${i * 23}deg)`,opacity:0},
+              {opacity:1,offset:.12},
+              {opacity:1,offset:.82},
+              {transform:`translate(${drift}px,${Math.max(40,bottom - top)}px) rotate(${i * 23 + 230}deg)`,opacity:0}
+            ], {duration:1550 + i % 4 * 170,delay:240 + i * 42,fill:'both',easing:'linear'}));
+          }
+        }
+        if (!quiet) {
+          const wasResting = cardRig.classList.contains('is-resting');
+          const frozenTransform = wasResting ? `rotateX(0deg) rotateY(${isFlipped ? 180 : 0}deg)` : (getComputedStyle(cardRig).transform === 'none' ? 'rotateX(0deg) rotateY(0deg)' : getComputedStyle(cardRig).transform);
+          cardRig.classList.remove('is-resting', 'is-tilting');
+          cardRig.classList.add('is-party-trick');
+          const width = cardRig.offsetWidth, height = cardRig.offsetHeight;
+          const diagonal = Math.hypot(width,height);
+          const spinScale = Math.min(1, Math.max(.01, (scene.height - 16) / diagonal));
+          const lean = Math.atan2(width,height) * 180 / Math.PI;
+          const baseFace = isFlipped ? 180 : 0;
+          // The lower-left corner is directly below the card center after this
+          // lean. Global Y rotation passes through both: a fixed tabletop tip.
+          // A constant fit factor preserves the approved spin size; no translation.
+          const pose = (angle) => `rotateY(${baseFace + angle}deg) rotateZ(${-lean}deg) scale(${spinScale})`;
+          const pivot = document.createElement('span');
+          pivot.className = 'card-party-pivot';
+          pivot.style.left = `${scene.left + scene.width / 2}px`;
+          pivot.style.top = `${scene.top + scene.height / 2 + diagonal * spinScale / 2 + 4}px`;
+          layer.appendChild(pivot);
+          state.animations.push(cardRig.animate([
+            {transform:frozenTransform,offset:0},
+            {transform:pose(0),offset:.12,easing:'cubic-bezier(.2,.35,.4,1)'},
+            {transform:pose(1440),offset:.86},
+            {transform:pose(1440),offset:.90},
+            {transform:frozenTransform,offset:1}
+          ], {duration:7600,easing:'linear',fill:'both'}));
+        }
+        state.timer = setTimeout(() => finishPartyTrick(), quiet ? 1150 : 7650);
+      }
+
+      partyLogo.addEventListener('dblclick', (event) => {
+        event.preventDefault();
+        lastPartyTap = null;
+        startPartyTrick();
+      });
+      partyLogo.addEventListener('click', (event) => {
+        // Native button click from Enter, Space or assistive technology.
+        if (event.detail === 0) startPartyTrick();
+      });
+      partyLogo.addEventListener('pointerup', (event) => {
+        if (event.pointerType !== 'touch' || !event.isPrimary) return;
+        const now = performance.now();
+        const previous = lastPartyTap;
+        lastPartyTap = {time:now,x:event.clientX,y:event.clientY};
+        if (previous && now - previous.time < 350 && Math.hypot(event.clientX - previous.x,event.clientY - previous.y) < 18) {
+          event.preventDefault();
+          lastPartyTap = null;
+          // Window pointerup clears the normal interaction pause first.
+          setTimeout(startPartyTrick, 0);
+        }
+      });
+      window.addEventListener('pagehide', () => finishPartyTrick('closed'));
+
+
       applyMotionPreference();
       syncMotionAccessibility();
       settleCard();
       renderCardTransform();
-      window.addEventListener('load', fitCardStage);
+      window.addEventListener('load', finishFrameInitialization);
       requestAnimationFrame(fitCardStage);
     })();

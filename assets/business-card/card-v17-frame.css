@@ -3,6 +3,8 @@
 .translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
 html,body{height:100%;min-height:0!important;overflow:hidden!important;background:transparent!important}
 html{color-scheme:light}
+html:not([data-card-ready="true"]) #app-body{visibility:hidden}
+html:not([data-card-ready="true"]) .card-rig{transition:none!important}
 #app-body{height:100dvh;min-height:0!important;padding:8px 12px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;background:transparent!important}
 #app-body>.fixed.pointer-events-none.overflow-hidden{display:none}
 .card-toolbar{width:100%;max-width:1200px;flex-shrink:0;padding:0;gap:8px}
@@ -20,3 +22,47 @@ button:focus-visible,a:focus-visible{outline:3px solid #83a395;outline-offset:3p
 @media(max-height:430px){#app-body{padding-block:4px;gap:6px}.card-main{gap:10px}.card-helper{padding:4px 8px}.card-helper>div:first-child{display:none}.card-helper>div:last-child{width:100%;justify-content:center}.card-controls button{padding:5px 7px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.card-rig{transition:none!important}}
 #scene-container{touch-action:none}
+
+/* Agent fleet: scoped, finite preview Easter egg. */
+.card-party-logo{position:relative;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-4px;padding:4px;border:0;background:transparent;border-radius:8px;touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.card-party-logo img{width:36px;height:36px;pointer-events:none}
+.card-party-logo[aria-busy="true"]{cursor:default}
+.card-rig.is-party-trick{transition:none!important;pointer-events:none;will-change:transform}
+.card-party-layer{position:fixed;inset:0;z-index:25;overflow:hidden;pointer-events:none;contain:layout paint style}
+.card-party-bill{position:absolute;width:34px;height:18px;border:1px solid #9dc3a4;border-radius:2px;background:#bcd3ac;color:#234d35;box-shadow:inset 0 0 0 2px #547e5e,0 1px 3px #0003;display:flex;align-items:center;justify-content:center;font:bold 13px Georgia,serif;line-height:1;user-select:none}
+.card-party-bill:nth-child(3n){background:#dfd6ad;border-color:#e8dbb0;color:#63542d;box-shadow:inset 0 0 0 2px #9c8c5e,0 1px 3px #0003}
+.card-party-pivot{position:absolute;width:18px;height:5px;margin-left:-9px;border-radius:50%;background:#c8b59888;box-shadow:0 0 14px #c8b59866}
+
+/* Agent fleet: diagonal stage keeps the tabletop spin at a constant scale. */
+#scene-container{height:var(--stage-height,auto)}
+.card-rig{height:var(--card-content-height,auto)}
+@container (max-width:399px){
+  #card-front .card-front-brand,#rates-artwork,#front-services-footer{flex-shrink:0}
+  #front-services-footer{transform:none!important}
+}
+.card-main:has(.is-party-trick) #floor-shadow{opacity:0}
+
+/* Agent fleet: compact mobile controls surround the card, not its spin envelope. */
+#card-mobile-caption{display:none}
+@media(max-width:900px){
+  #app-body{justify-content:flex-start;gap:8px}
+  .card-toolbar{display:flex;justify-content:center;min-height:44px}
+  .card-toolbar>div:first-child{justify-content:center}
+  .card-party-logo{margin:0}
+  .card-main{flex:1;min-height:0;justify-content:center;gap:8px}
+  .card-main>.card-controls{width:100%;flex-shrink:0;justify-content:center}
+  #btn-flip-card{display:none}
+  .card-controls button{min-height:44px}
+  #scene-container{height:var(--mobile-scene-height,var(--stage-height));max-width:100%}
+  #app-body:has(.card-party-logo[aria-busy="true"][data-party-variant="corner-spin"]) #scene-container{height:var(--stage-height)}
+  #card-mobile-caption{display:block;flex-shrink:0;margin:0;padding:6px 12px;border:0;border-radius:8px;background:rgba(22,18,14,.86);color:#f4f0e4;font:500 12px/1.4 Inter,sans-serif;text-align:center}
+  .card-helper{flex-shrink:0}
+}
+@media(max-width:900px) and (max-height:430px){
+  #app-body{padding-block:4px;gap:4px}
+  .card-main{gap:4px}
+  .card-controls button{min-height:32px}
+  #card-mobile-caption{padding-block:3px;font-size:11px}
+  #scene-container{height:calc(var(--mobile-scene-height,var(--stage-height)) - 8px)}
+  .card-helper{padding-block:0}
+}

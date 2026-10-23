@@ -11,6 +11,8 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   let closing = false;
   let returnFocus = trigger;
+  let frameReady = false;
+  let opening = null;
 
   // Agent fleet: current-page disclosure state only; no browser storage.
   const dock = document.getElementById('portfolio-card-dock');
@@ -90,13 +92,14 @@
     returnFocus = trigger;
     closing = false;
     loading.hidden = false;
+    frameReady = false;
     document.documentElement.classList.add('portfolio-card-open');
     dialog.showModal();
     trigger.setAttribute('aria-expanded','true');
     frame.src = frame.dataset.src;
     close.focus({preventScroll:true});
     if (!reduced.matches && panel.animate) {
-      panel.animate([{transform:originTransform(),opacity:.1},{transform:'none',opacity:1}],
+      opening = panel.animate([{transform:originTransform(),opacity:.1},{transform:'none',opacity:1}],
         {duration:260,easing:'cubic-bezier(.2,.8,.2,1)'});
     }
   });
@@ -113,19 +116,26 @@
 
   frame.addEventListener('load', () => {
     if (!dialog.open || !frame.hasAttribute('src')) return;
-    try {
-      loading.hidden = true;
-    } catch { loading.querySelector('span').textContent = 'Card unavailable. Close to return to the portfolio.'; }
+    // HTML load precedes final font metrics and the fitted first pose.
+    if (frameReady) loading.hidden = true;
   });
 
   window.addEventListener('message', event => {
     if (event.source !== frame.contentWindow || event.origin !== location.origin || !dialog.open) return;
+    if (event.data?.type === 'portfolio-card:ready') {
+      frameReady = true;
+      const reveal = () => { if (dialog.open && frameReady) loading.hidden = true; };
+      if (opening) opening.finished.then(reveal,reveal);
+      else reveal();
+    }
     if (event.data?.type === 'portfolio-card:close') requestClose();
     if (event.data?.type === 'portfolio-card:focus-close') close.focus({preventScroll:true});
   });
 
   dialog.addEventListener('close', () => {
     frame.removeAttribute('src');
+    frameReady = false;
+    opening = null;
     document.documentElement.classList.remove('portfolio-card-open');
     trigger.setAttribute('aria-expanded','false');
     closing = false;
