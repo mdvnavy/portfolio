@@ -705,16 +705,18 @@
         const outerGap = parseFloat(bodyStyle.rowGap) || 0;
         const innerGap = parseFloat(stageStyle.rowGap) || 0;
         const helper = document.getElementById('card-helper');
-        const maximum = Math.max(1, Math.min(compactLayout.matches ? 900 : 1080, viewportWidth - 32));
+        const maximum = Math.max(1, Math.min(compactLayout.matches ? 900 : 1350, viewportWidth - 32));
         const extraRows = compactLayout.matches ? mobileControls.getBoundingClientRect().height + mobileCaption.getBoundingClientRect().height + innerGap * 2 : 0;
         const reserve = toolbar.getBoundingClientRect().height + helper.getBoundingClientRect().height + verticalPadding + outerGap + innerGap + extraRows;
         const diagonalFactor = Math.hypot(1, 1 / 1.75);
         const spinWidth = Math.max(1, Math.min(maximum, (viewportHeight - reserve - 20) / diagonalFactor));
-        const restingWidth = Math.min(maximum, spinWidth * (compactLayout.matches ? 1.10 : 1.65));
-        // Desktop inspection is another 20% larger than the published 1.375 fit;
-        // mobile and the finite trick retain their existing envelopes.
+        const stageHeight = spinWidth * diagonalFactor + 16;
+        const desiredWidth = spinWidth * (compactLayout.matches ? 1.10 : 2.0625);
+        // Desktop is another 25% larger, bounded by both viewport and stage height.
+        // Mobile and the finite trick retain their existing envelopes.
+        const restingWidth = Math.min(maximum, desiredWidth, compactLayout.matches ? Infinity : stageHeight * 1.75);
         document.documentElement.style.setProperty('--stage-width', restingWidth.toFixed(2) + 'px');
-        document.documentElement.style.setProperty('--stage-height', (spinWidth * diagonalFactor + 16).toFixed(2) + 'px');
+        document.documentElement.style.setProperty('--stage-height', stageHeight.toFixed(2) + 'px');
         document.documentElement.style.removeProperty('--card-content-height');
         if (restingWidth < 400) {
           // Compact cards retain every original row instead of cropping terms.
