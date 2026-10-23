@@ -1,0 +1,22 @@
+/* Universal artifact identity is agent fleet. Local preview shell only. */
+.opacity-100{opacity:1}
+.translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+html,body{height:100%;min-height:0!important;overflow:hidden!important;background:transparent!important}
+html{color-scheme:light}
+#app-body{height:100dvh;min-height:0!important;padding:8px 12px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;background:transparent!important}
+#app-body>.fixed.pointer-events-none.overflow-hidden{display:none}
+.card-toolbar{width:100%;max-width:1200px;flex-shrink:0;padding:0;gap:8px}
+.card-controls{max-width:none;justify-content:center}
+.card-controls>div{background:rgba(22,18,14,.86)}
+.card-controls button:disabled{cursor:not-allowed;opacity:.55}
+.card-main{width:100%;max-width:1200px;display:flex;flex-direction:column;align-items:center;gap:14px;margin:0;flex:0 1 auto}
+#scene-container{width:var(--stage-width);flex-shrink:0;margin-inline:auto;padding:0}
+.card-helper{width:100%;max-width:1200px;margin:0;flex-shrink:0;background:rgba(22,18,14,.86);backdrop-filter:none}
+.card-helper>div{min-height:28px}
+#qr-modal{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#qr-modal>div{max-height:calc(100dvh - 16px);overflow:auto}
+#toast-banner{max-width:calc(100% - 24px);bottom:12px;right:12px}
+button:focus-visible,a:focus-visible{outline:3px solid #83a395;outline-offset:3px}
+@media(max-height:430px){#app-body{padding-block:4px;gap:6px}.card-main{gap:10px}.card-helper{padding:4px 8px}.card-helper>div:first-child{display:none}.card-helper>div:last-child{width:100%;justify-content:center}.card-controls button{padding:5px 7px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.card-rig{transition:none!important}}
+#scene-container{touch-action:none}
