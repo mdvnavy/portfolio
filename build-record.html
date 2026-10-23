@@ -1,0 +1,125 @@
+<!doctype html>
+<!-- ARTIFACT_IDENTITY_POLICY: Produced by the agent fleet. Public-safe cloud reconstruction; review provenance is recorded separately from the product page. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A closer look at Ikenna Nwakwesi's product work, desktop tools, supporting systems and dated implementation evidence.">
+  <title>The build record — Ikenna Nwakwesi</title>
+  <link rel="stylesheet" href="assets/build-record.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topline"></div>
+<div class="wrap">
+  <header class="header"><a class="wordmark" href="index.html">Ikenna Nwakwesi</a><a class="back-link" href="index.html#evidence">← Back to portfolio</a></header>
+  <main id="main">
+    <div class="hero">
+      <p class="eyebrow">Portfolio / Selected systems / 2026</p>
+      <h1>The build record.</h1>
+      <p class="intro">A closer look at the products and tools I’m building: what each system does, the decisions behind it, and the evidence I can share.</p>
+      <p class="scope-note">Each entry states its scope. Internal builds and prototypes are described as work in development; public demos and sources are linked where available.</p>
+    </div>
+    <nav class="contents" aria-label="Build record sections">
+      <a href="#products"><span class="number">01</span>Product work</a>
+      <a href="#desktop"><span class="number">02</span>Desktop tools</a>
+      <a href="#support"><span class="number">03</span>Supporting systems</a>
+      <a href="#milestones"><span class="number">04</span>Dated evidence</a>
+      <a href="#research"><span class="number">05</span>Research &amp; writing</a>
+    </nav>
+
+    <section id="products" aria-labelledby="products-heading">
+      <div class="section-heading"><h2 id="products-heading">Product work</h2><span class="section-label">01 / From problem to system</span></div>
+      <div class="cards">
+        <article class="card internal" id="homebase" aria-labelledby="homebase-title">
+          <p class="status">Internal build · In development</p><h3 id="homebase-title">Homebase</h3>
+          <p class="lead">An agent workspace in your browser, grounded in your environment.</p>
+          <p>Agent sessions, voice, attachments and practical workflows, brought together in one workspace.</p>
+          <p class="availability">Product in development. No public demo is linked here.</p>
+          <details><summary>Direction &amp; current scope</summary><div class="detail-body"><p>The direction is a workspace the agent can operate while you focus on the work. The current internal build brings the working session and its inputs together.</p><p>PR Hub is a separate internal build. Its proposed integration with Homebase remains a product direction.</p></div></details>
+        </article>
+
+        <article class="card internal" id="family" aria-labelledby="family-title">
+          <p class="status">Private project · Historical build record</p><h3 id="family-title">Family social platform</h3>
+          <p class="lead">A private place for family history and everyday connection.</p>
+          <p>A system mapped before its first commit, later extended with direct and small-group messaging.</p>
+          <p class="availability">Text record only. No personal profiles or family captures are shown.</p>
+          <details><summary>Historical snapshot &amp; privacy choices</summary><div class="detail-body">
+            <p><strong>The first 66 elapsed hours</strong> produced the following historical snapshot. These are user-reported counts corroborated by the project’s About data.</p>
+            <dl class="snapshot"><div><dt>101</dt><dd>commits</dd></div><div><dt>58</dt><dd>people recorded</dd></div><div><dt>92</dt><dd>relationships</dd></div><div><dt>123</dt><dd>sourced facts</dd></div><div><dt>35</dt><dd>deployments</dd></div></dl>
+            <p>These are historical project counts, not current totals, paid adoption, measured labour hours or scale-test results.</p>
+            <p>Later messaging work added floating, expanded and full-page views, notifications and attachments.</p>
+            <p><strong>Encryption and retention:</strong> messages are encrypted at rest using a server-managed key; this is not end-to-end encryption. App message expiry is 30 days. Attachments expire after 7 days or are removed earlier after downloads. Recoverable cloud soft deletion for 7 days is intentionally preserved; expiry does not establish immediate permanent deletion.</p>
+          </div></details>
+        </article>
+
+        <article class="card" id="dia" aria-labelledby="dia-title">
+          <p class="status">Public demo + source</p><h3 id="dia-title">DIA</h3>
+          <p class="lead">A discovery questionnaire becomes a scored opportunity and useful documents.</p>
+          <p>A deterministic pipeline parses, validates and scores the input, then produces a client profile, opportunity analysis and proposal draft.</p>
+          <div class="card-actions"><a href="https://dia-discovery-intake-623133365140.us-central1.run.app/" target="_blank" rel="noopener">Open demo ↗</a><a href="https://github.com/mdvnavy/Dia" target="_blank" rel="noopener">Read the source ↗</a></div>
+          <details><summary>Implementation &amp; evidence</summary><div class="detail-body"><p>The deterministic path keeps scoring and generated documents inspectable. A Gemini agent can call those same functions as tools.</p><p>New implementation work is tracked separately from what has been deployed. An open pull request does not establish that a feature is available in the public demo. ClientMemory rows using <strong>Northstar.example</strong> are fixtures, not real customers.</p><p><a href="#dia-milestone">Inspect the dated implementation record ↓</a></p></div></details>
+        </article>
+
+        <article class="card internal" id="tia" aria-labelledby="tia-title">
+          <p class="status">Prototype / Early access</p><h3 id="tia-title">Tia</h3>
+          <p class="lead">A teaching workspace built around educator review.</p>
+          <p>Profiles, assistance, feedback and classroom drafts support the educator’s decisions.</p>
+          <p class="availability">Product assets are under review. No classroom adoption or paid pilot is claimed.</p>
+          <details><summary>Scope &amp; review status</summary><div class="detail-body"><p>The work is a prototype with an early-access direction. The educator reviews the assistance and drafts; this record does not establish classroom deployment or teaching outcomes.</p><p>Approved product captures will be added when available. Current implementation and release status are reviewed separately.</p></div></details>
+        </article>
+      </div>
+    </section>
+
+    <section id="desktop" aria-labelledby="desktop-heading">
+      <div class="section-heading"><h2 id="desktop-heading">Desktop tools</h2><span class="section-label">02 / Operator-controlled work</span></div>
+      <div class="cards">
+        <article class="card internal" id="bespoke" aria-labelledby="bespoke-title">
+          <p class="status">Internal desktop tool</p><h3 id="bespoke-title">Bespoke</h3>
+          <p class="lead">More control over how information enters and leaves your workspace.</p>
+          <p>Read text, ask a question or have a live conversation through a compact desktop surface.</p>
+          <p class="availability">Implementation described here. No catalog concept is presented as a product capture.</p>
+          <details><summary>Modes &amp; implementation</summary><div class="detail-body"><ul><li><strong>speak:</strong> read text with playback controls.</li><li><strong>ask:</strong> answer a prompt, then speak the response.</li><li><strong>live:</strong> stream microphone audio and native audio replies, with interruption handling.</li></ul><p>This describes the internal implementation. It does not establish a new end-to-end microphone or latency test, or a full accessibility screen reader.</p></div></details>
+        </article>
+
+        <article class="card internal" id="agent-cursor" aria-labelledby="cursor-title">
+          <p class="status">Local implementation · Part of Bespoke</p><h3 id="cursor-title">Agent Cursor</h3>
+          <p class="lead">A visible pointer for agent-assisted desktop work.</p>
+          <p>Point, highlight and act with operator controls. Checked steps can become learn-and-replay recipes.</p>
+          <details><summary>Operator control &amp; verified steps</summary><div class="detail-body"><p>Agent Cursor is part of Bespoke. Durable targets and verified step recipes support repeatable desktop actions; replay follows the operator’s selected approval mode.</p><p><a href="#cursor-milestone">Read the 8 October implementation milestone ↓</a></p></div></details>
+        </article>
+
+        <article class="card internal" id="shutter" aria-labelledby="shutter-title">
+          <p class="status">Internal tool · Working name</p><h3 id="shutter-title">Shutter</h3>
+          <p class="lead">Windows captures that can be searched and used from the command line.</p>
+          <p>Screenshots, OCR and searchable captures support finding information from the desktop.</p>
+          <details><summary>Implementation scope</summary><div class="detail-body"><p>Shutter is a working name for an internal Windows tool. The record covers screenshots, OCR, searchable captures and a CLI; no public release or performance result is claimed.</p></div></details>
+        </article>
+      </div>
+    </section>
+
+    <section id="support" aria-labelledby="support-heading">
+      <div class="section-heading"><h2 id="support-heading">Supporting systems</h2><span class="section-label">03 / How the work holds together</span></div>
+      <div class="cards">
+        <article class="card internal" id="baton" aria-labelledby="baton-title"><p class="status">Working locally</p><h3 id="baton-title">Baton</h3><p>Traceable session handoffs, read receipts and a local fallback support coordination across agents.</p><details><summary>The implementation choice</summary><div class="detail-body"><p>Handoffs leave a record of how work moved and whether it was received. Local fallback supports continuity across working environments.</p></div></details></article>
+        <article class="card internal" id="blackboard" aria-labelledby="blackboard-title"><p class="status">Working locally</p><h3 id="blackboard-title">Blackboard</h3><p>A readable activity and artifact record across people and agents.</p><details><summary>The implementation choice</summary><div class="detail-body"><p>Plain JSON events keep the record readable even when the local viewer is down. The viewer surfaces handoffs, shared artifacts and fleet activity.</p></div></details></article>
+        <article class="card internal" id="agent-eggs" aria-labelledby="eggs-title"><p class="status">Portable context &amp; capabilities</p><h3 id="eggs-title">Agent Eggs</h3><p>Packages carry useful context and capabilities between environments, with verification and recorded launches.</p><details><summary>Scope &amp; traceability</summary><div class="detail-body"><p>Package verification and launch records make what was loaded more inspectable. The work focuses on reusable context and capabilities across environments.</p></div></details></article>
+        <article class="card internal" id="pr-hub" aria-labelledby="prhub-title"><p class="status">Separate internal build</p><h3 id="prhub-title">PR Hub</h3><p>A cross-repository pull-request dashboard with agent dispatch.</p><details><summary>Current build &amp; proposed integration</summary><div class="detail-body"><p>PR Hub is a separate internal build. Homebase integration is proposed; this record does not present it as an existing Homebase feature.</p></div></details></article>
+        <article class="card internal" id="amazon-ads" aria-labelledby="ads-title"><p class="status">Internal reporting pipeline</p><h3 id="ads-title">Amazon Ads reporting</h3><p>Source reports become queryable information through retrieval, durable storage and console-export ingestion.</p><details><summary>Data path &amp; dated evidence</summary><div class="detail-body"><p>Parquet snapshots feed a rebuildable DuckDB store and a read-only query interface. An additional path normalizes exported report columns and year-month periods.</p><p>Account data, client outputs and commercial performance are excluded.</p><p><a href="#ads-milestone">Read the 27–28 July implementation milestones ↓</a></p></div></details></article>
+      </div>
+    </section>
+
+    <section id="milestones" aria-labelledby="milestones-heading">
+      <div class="section-heading"><h2 id="milestones-heading">Dated evidence</h2><span class="section-label">04 / Selected implementation steps</span></div>
+      <details class="record-row" id="dia-milestone"><summary><span class="record-date">06–09 Jun<br>2026</span><span class="record-title">DIA: public demo to capture tooling<small>Public commits and a scoped historical test record</small></span></summary><div class="detail-body"><dl class="timeline"><dt>06 Jun · 19:43</dt><dd><strong>Initial public demo.</strong> Parser, scoring, document generation, web interface and tests. <a href="https://github.com/mdvnavy/Dia/commit/8f848a2" target="_blank" rel="noopener">Commit ↗</a></dd><dt>09 Jun · 01:01</dt><dd><strong>Capture integration.</strong> The original note records 26 passing tests across three named modules. This is a historical result, not a current full-suite total. <a href="https://raw.githubusercontent.com/mdvnavy/Dia/b95ee4f45365ac84481561f139f118bbe09f10dd/CAPTURE_INTEGRATION.md" target="_blank" rel="noopener">Original note ↗</a></dd><dt>09 Jun · 02:37</dt><dd><strong>Capture made opt-in.</strong> OBS capture is gated behind an explicit setting, with failures caught so they do not break the intake response. <a href="https://github.com/mdvnavy/Dia/commit/0dff12d" target="_blank" rel="noopener">Implementation ↗</a></dd></dl><p>Times shown in EDT (UTC−04:00), from the original commit records. No elapsed-time or submission claim is inferred.</p></div></details>
+      <details class="record-row" id="ads-milestone"><summary><span class="record-date">27–28 Jul<br>2026</span><span class="record-title">Amazon Ads: a queryable reporting pipeline<small>API retrieval → durable storage → console-export ingestion</small></span></summary><div class="detail-body"><dl class="timeline"><dt>27 Jul · 23:53</dt><dd><strong>Report retrieval.</strong> A v1 API client creates or resumes a report, waits for completion, then downloads it.</dd><dt>28 Jul · 00:41</dt><dd><strong>Durable data layer.</strong> Parquet snapshots feed a rebuildable DuckDB store and a read-only query interface.</dd><dt>28 Jul · 00:57</dt><dd><strong>Console-export support.</strong> An additional path normalizes exported report columns and handles year-month periods.</dd></dl><p>EDT (UTC−04:00). These milestones are carried forward from the existing portfolio record, which states they were checked against the corresponding local repository revisions. No new source audit is claimed here.</p></div></details>
+      <details class="record-row" id="cursor-milestone"><summary><span class="record-date">08 Oct<br>2026</span><span class="record-title">Bespoke: repeatable desktop actions<small>Local implementation · verified step recipes and durable targets</small></span></summary><div class="detail-body"><p>Work on remembering a step after its result has been checked, then replaying it against a durable target. Replay follows the operator’s selected approval mode.</p><p>Carried forward from the existing portfolio’s internal implementation record. Source remains private. This is not a public release, a client deployment or a measured productivity result.</p></div></details>
+    </section>
+
+    <section id="research" class="research" aria-labelledby="research-heading"><div class="section-heading"><h2 id="research-heading">Research &amp; writing</h2><span class="section-label">05 / The thinking behind the work</span></div><p>dPKL — the Deterministic Personal Knowledge Layer — is the foundation of how I think about AI systems. The framework and related essays explore portable working knowledge, execution, the operator’s role and human autonomy.</p><p>The public portfolio carries summaries, versions and dates. Full texts remain unpublished.</p><a href="index.html#research">Explore the research summaries →</a></section>
+  </main>
+  <footer class="footer"><div><strong>Ikenna Nwakwesi</strong><small>Product, commercial operations &amp; practical AI systems</small></div><a href="index.html#contact">Get in touch →</a><a href="#main">Back to top ↑</a></footer>
+</div>
+</body>
+</html>
