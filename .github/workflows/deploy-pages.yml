@@ -1,6 +1,8 @@
-# Gate: the ONLY way portfolio goes live (proposal section 4).
-# workflow_dispatch only, never on push. The `github-pages` environment requires
-# reviewer mdvnavy, and a deploy runs only after Ikenna's own verified "yes".
+# Gate: manual Pages deploy (proposal section 4). NOT the live path today.
+# The site is published by GitHub's legacy "pages build and deployment" from
+# main / (root): merging to main publishes cultivatedco.ca. This workflow only
+# runs on workflow_dispatch, never on push. The `github-pages` environment has a
+# deployment-branch policy but no required reviewer.
 # No cloud credentials; Pages uses the built-in OIDC token (id-token: write).
 name: deploy-pages
 
