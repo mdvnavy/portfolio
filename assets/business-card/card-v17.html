@@ -411,7 +411,8 @@
 .seminar-draft .workshop-card-cta{margin-top:10px}
 @media(max-width:600px){.workshop-card-schedule{grid-template-columns:1fr;gap:10px}.workshop-card-schedule strong{display:inline}.workshop-card-addon{width:calc(100% - 24px);padding:24px}.workshop-card-fee span{max-width:27ch;margin-inline:auto}.workshop-card-fee{gap:14px}.workshop-card-note{font-size:12px}}
 @media print{.workshop-card-addon{break-inside:avoid}.workshop-card-review{display:none}}
-</style>
+    .ext-arrow{position:relative;line-height:normal;-webkit-text-fill-color:transparent;text-decoration-skip-ink:none}.ext-arrow::before{content:"\2191";position:absolute;left:0;top:0;line-height:normal;-webkit-text-fill-color:currentcolor;transform-origin:50% 50%;transform:rotate(45deg) scale(.9)}
+  </style>
   <link rel="stylesheet" href="card-v17-frame.css" />
 </head>
 <body id="app-body" class="bg-[#16120E] text-[#F4F0E4] flex flex-col justify-between min-h-screen transition-colors duration-500">
@@ -837,7 +838,7 @@
           rel="noopener noreferrer"
           class="flex-1 py-2.5 px-4 rounded-lg bg-[#0D563B] hover:bg-[#08633B] text-white font-medium text-xs transition text-center"
         >
-          Open Website ↗
+          Open Website <span class="ext-arrow" aria-hidden="true">↑</span>
         </a>
         <button
           id="qr-modal-copy-btn"
