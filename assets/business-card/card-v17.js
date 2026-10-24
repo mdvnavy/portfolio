@@ -781,8 +781,8 @@
       partyLogo.type = 'button';
       partyLogo.id = 'card-party-logo';
       partyLogo.className = 'card-party-logo';
-      partyLogo.setAttribute('aria-label', 'BA$H logo. Play card party trick');
-      partyLogo.title = 'BA$H Systems';
+      partyLogo.setAttribute('aria-label', 'BASH logo. Play card party trick');
+      partyLogo.title = 'BASH Systems';
       partyLogo.dataset.partyState = 'idle';
       partyLogo.dataset.partyRuns = '0';
       partyLogoImage.before(partyLogo);
