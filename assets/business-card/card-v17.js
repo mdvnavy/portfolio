@@ -26,6 +26,15 @@
       const qrModalDesc = document.getElementById('qr-modal-desc');
       const qrModalSvgBox = document.getElementById('qr-modal-svg-box');
       const qrModalOpenLink = document.getElementById('qr-modal-open-link');
+      // External-link arrow: the text-only ↑ glyph drawn rotated 45° by .ext-arrow::before, never the
+      // emoji-capable U+2197, which iOS Safari draws as a blue emoji box.
+      const setOpenLinkLabel = (label) => {
+        const arrow = document.createElement('span');
+        arrow.className = 'ext-arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '\u2191';
+        qrModalOpenLink.replaceChildren(document.createTextNode(label + ' '), arrow);
+      };
       const qrModalCopyBtn = document.getElementById('qr-modal-copy-btn');
 
       const btnZoomQrBash = document.getElementById('btn-zoom-qr-bash');
@@ -602,7 +611,7 @@
           qrModalDesc.textContent = 'BASH Systems & Services — Architecture, Planning & Rates';
           qrModalSvgBox.innerHTML = QR_SVGS.bash;
           qrModalOpenLink.href = 'https://bashsystems.net';
-          qrModalOpenLink.textContent = 'Open bashsystems.net ↗';
+          setOpenLinkLabel('Open bashsystems.net');
         } else {
           currentModalUrl = 'https://cultivatedco.ca';
           qrModalBadge.textContent = 'PORTFOLIO';
@@ -610,7 +619,7 @@
           qrModalDesc.textContent = 'Selected Portfolio, Case Studies & Creative Projects';
           qrModalSvgBox.innerHTML = QR_SVGS.cult;
           qrModalOpenLink.href = 'https://cultivatedco.ca';
-          qrModalOpenLink.textContent = 'Open cultivatedco.ca ↗';
+          setOpenLinkLabel('Open cultivatedco.ca');
         }
         qrModal.classList.remove('hidden');
         qrModal.classList.add('flex');
