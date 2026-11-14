@@ -1,0 +1,98 @@
+/* Portfolio redesign additions. Fonts and palette unchanged. */
+html,body{overflow-x:clip}
+[id]{scroll-margin-top:calc(var(--cc-hdr,96px) + 14px)}
+
+/* 4. Sticky header, frosted once imagery sits under it */
+.wrap>.header{position:sticky;top:0;z-index:40;border-bottom:0;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%);background:var(--paper);transition:background-color .35s ease,-webkit-backdrop-filter .35s ease,backdrop-filter .35s ease}
+.wrap>.header::after{content:"";position:absolute;left:calc(50vw - 50%);right:calc(50vw - 50%);bottom:0;height:1px;background:var(--line);transition:opacity .35s}
+.wrap>.header.is-frosted{background:rgba(239,231,215,.4);-webkit-backdrop-filter:blur(24px) saturate(1.15);backdrop-filter:blur(24px) saturate(1.15)}
+.wrap>.header.is-frosted::after{opacity:.55}
+.cc-clock{font-size:11px;letter-spacing:.6px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cc-clock b{font-weight:600;display:none}
+@media(max-width:850px){.cc-clock b{display:inline}}
+@media(max-width:600px){.cc-clock{font-size:10px;letter-spacing:.3px}.cc-clock b{display:none}.wordmark,.header-meta .header-work{white-space:nowrap}}
+.rail{top:calc(var(--cc-hdr,96px) + 16px);max-height:calc(100dvh - var(--cc-hdr,96px) - 32px)}
+
+/* 2. Calmer hero, then the work */
+.cc-top .hero{padding:46px 0 30px}
+.cc-top .hero h1{font-size:clamp(40px,3.7vw,54px);letter-spacing:-1.3px;line-height:1.02;margin-bottom:20px}
+.cc-top .hero-intro{max-width:620px}
+@media(max-width:600px){.cc-top .hero{padding:30px 0 22px}.cc-top .hero h1{font-size:clamp(34px,9.6vw,42px);letter-spacing:-.9px}}
+
+.cc-reel{position:relative;width:100vw;margin:4px 0 0 calc(50% - 50vw);overflow:hidden;padding:4px 0 14px}
+.cc-reel-track{display:flex;align-items:flex-end;gap:18px;width:max-content;padding:0 46px;will-change:transform}
+.cc-shot{flex:none;display:flex;flex-direction:column;gap:9px;color:var(--ink);text-decoration:none}
+.cc-shot-name{display:flex;gap:10px;align-items:baseline;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+.cc-shot-name small{font-size:11px;text-transform:none;letter-spacing:0;font-weight:450;color:var(--muted)}
+.cc-shot img,.cc-baton-card{display:block;height:var(--h);width:auto;border:1px solid var(--line);border-radius:16px 4px 16px 4px;background:var(--light);box-shadow:0 18px 40px -28px rgba(42,31,23,.55);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+a.cc-shot:hover img,a.cc-shot:hover .cc-baton-card{transform:translateY(-6px)}
+a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border-radius:6px}
+.cc-baton-card{box-sizing:border-box;width:430px;padding:22px 24px;background:#203F35;border-color:#203F35;color:#E8EEE6;display:flex;flex-direction:column;justify-content:space-between;font:12.5px/1.65 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+.cc-baton-card .p{color:#83A395}
+.cc-baton-card .id{color:#F8F3E9;font-weight:600}
+.cc-baton-card .c{color:#9FB5A9}
+.cc-baton-card .tag{font:600 9.5px/1.3 var(--sans);letter-spacing:1.3px;text-transform:uppercase;color:#C8D7C9;border:1px dashed rgba(200,215,201,.55);border-radius:99px;padding:6px 10px;align-self:flex-start}
+.cc-reel-hint{display:flex;justify-content:space-between;gap:16px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;color:var(--muted);margin:8px 0 0}
+@media(max-width:900px){.cc-reel-track{padding:0 28px}}
+@media(max-width:760px),(hover:none){
+  .cc-reel{overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .cc-reel::-webkit-scrollbar{display:none}
+  .cc-reel-track{transform:none!important;padding:0 21px}
+  .cc-shot{scroll-snap-align:start}
+  .cc-shot img,.cc-baton-card{height:calc(var(--h) * .62)}
+  .cc-baton-card{width:290px;padding:16px 17px;font-size:10.5px}
+}
+
+/* 3. BUILDS index word and the two-up */
+.cc-builds{padding:44px 0 18px;border-top:1px solid var(--line);margin-top:26px}
+.cc-builds .eyebrow{margin:0}
+.cc-builds-heading{margin:8px 0 22px}
+.cc-two-up{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cc-case{position:relative;display:block;overflow:hidden;border-radius:22px 5px 22px 5px;aspect-ratio:5/4;background:var(--surface);color:var(--light);text-decoration:none}
+.cc-case img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.cc-case:hover img{transform:scale(1.025)}
+.cc-case::after{content:"";position:absolute;inset:auto 0 0 0;height:56%;background:linear-gradient(to top,rgba(32,63,53,.94) 0%,rgba(32,63,53,.72) 38%,rgba(32,63,53,0) 100%);pointer-events:none}
+.cc-case-meta{position:absolute;left:24px;right:24px;bottom:20px;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.cc-case-name{font:500 clamp(30px,2.6vw,40px)/1 var(--serif);letter-spacing:-.8px}
+.cc-case-name small{display:block;font:600 10px/1.4 var(--sans);letter-spacing:1.5px;text-transform:uppercase;color:#C8D7C9;margin-top:8px}
+.cc-case-see{font:600 11px/1 var(--sans);letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap}
+.cc-case:focus-visible{outline:2px solid var(--green);outline-offset:4px}
+.cc-case-note{font-size:11px;line-height:1.6;color:var(--muted);margin:9px 2px 0}
+@media(max-width:760px){.cc-two-up{grid-template-columns:1fr;gap:24px}.cc-case-meta{left:18px;right:18px;bottom:16px}.cc-builds{padding-top:28px}}
+
+/* 4b. Bigger contact email */
+.work-contact .cc-email{display:inline-block;min-height:0;font:500 clamp(28px,3vw,40px)/1.08 var(--serif);letter-spacing:-.8px;color:var(--light);text-decoration:none;border-bottom:1px solid rgba(248,243,233,.35);margin:0 0 24px;overflow-wrap:anywhere}
+.work-contact .cc-email:hover{border-bottom-color:var(--light)}
+
+/* 1. Once-per-visit intro */
+.cc-intro{position:fixed;inset:0;z-index:200;background:var(--paper);display:none;place-items:center;transition:transform .6s cubic-bezier(.7,0,.2,1),opacity .6s ease}
+html.intro-pending .cc-intro{display:grid}
+html.intro-pending body{overflow:hidden}
+.cc-intro-mark{display:flex;align-items:center;gap:16px;font:650 clamp(26px,2.6vw,38px)/1 var(--sans);letter-spacing:-1px;color:var(--ink)}
+.cc-intro-mark .w{opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.cc-intro-mark .w:last-child{transition-delay:.08s}
+.cc-intro-chip{position:relative;width:15px;height:15px;perspective:700px;transition:width .6s cubic-bezier(.6,0,.2,1),height .6s cubic-bezier(.6,0,.2,1)}
+.cc-flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.6,0,.2,1)}
+.cc-flip i,.cc-flip img{position:absolute;inset:0;width:100%;height:100%;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.cc-flip i{background:var(--rust);opacity:0;transform:scale(.4);transition:opacity .3s,transform .4s}
+.cc-flip img{object-fit:cover;transform:rotateY(180deg);border-radius:5px}
+.cc-intro.s1 .w{opacity:1;transform:none}
+.cc-intro.s1 .cc-flip i{opacity:1;transform:none}
+.cc-intro.s2 .cc-intro-chip{width:92px;height:66px}
+.cc-intro.s2 .cc-flip{transform:rotateY(180deg)}
+.cc-intro.s2 .cc-flip i{border-radius:5px}
+.cc-intro.s3{transform:translateY(-100%)}
+.cc-intro.fast{transition-duration:.25s}
+.cc-intro-skip{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font:600 10px/1 var(--sans);letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--line);border-radius:99px;padding:10px 14px;cursor:pointer}
+.cc-intro-skip:hover,.cc-intro-skip:focus-visible{color:var(--ink);border-color:var(--ink)}
+html.cc-revealing .wrap{animation:ccRise .8s cubic-bezier(.2,.7,.2,1) both}
+@keyframes ccRise{from{opacity:.0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+
+
+@media(prefers-reduced-motion:reduce){
+  .cc-intro,.cc-intro *,.cc-shot img,.cc-case img,.wrap>.header{transition:none!important;animation:none!important}
+  html.cc-revealing .wrap{animation:none}
+  .cc-reel{overflow-x:auto}
+  .cc-reel-track{transform:none!important}
+}
