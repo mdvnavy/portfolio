@@ -13,6 +13,9 @@
   let returnFocus = trigger;
   let frameReady = false;
   let opening = null;
+  // Full-screen poke card: back button closes it, page scroll comes back where it was.
+  let pushedHistory = false;
+  let savedScroll = 0;
 
   // Agent fleet: current-page disclosure state only; no browser storage.
   const dock = document.getElementById('portfolio-card-dock');
@@ -79,9 +82,10 @@
     if (dialog.open) dialog.close();
   }
 
-  function requestClose() {
+  function requestClose(fromHistory) {
     if (!dialog.open || closing) return;
     closing = true;
+    if (fromHistory !== true && pushedHistory) { pushedHistory = false; history.back(); }
     if (reduced.matches || !panel.animate) return finishClose();
     panel.animate([{transform:'none',opacity:1},{transform:originTransform(),opacity:0}],
       {duration:180,easing:'cubic-bezier(.4,0,1,1)'}).finished.then(finishClose,finishClose);
@@ -91,6 +95,9 @@
     if (dialog.open) return;
     returnFocus = trigger;
     closing = false;
+    savedScroll = window.scrollY;
+    dialog.dataset.shade = '0';
+    try { history.pushState({ portfolioCard: true }, ''); pushedHistory = true; } catch { pushedHistory = false; }
     loading.hidden = false;
     frameReady = false;
     document.documentElement.classList.add('portfolio-card-open');
@@ -105,6 +112,11 @@
   });
 
   close.addEventListener('click', requestClose);
+  window.addEventListener('popstate', () => {
+    if (!pushedHistory) return;
+    pushedHistory = false;
+    requestClose(true);
+  });
   dialog.addEventListener('click', event => {
     if (event.target === dialog || event.target === panel || event.target === dialog.querySelector('.portfolio-card-topbar')) requestClose();
   });
@@ -129,6 +141,7 @@
       else reveal();
     }
     if (event.data?.type === 'portfolio-card:close') requestClose();
+    if (event.data?.type === 'portfolio-card:shade' && Number.isInteger(event.data.index)) dialog.dataset.shade = String(Math.max(0, Math.min(4, event.data.index)));
     if (event.data?.type === 'portfolio-card:focus-close') close.focus({preventScroll:true});
   });
 
@@ -145,5 +158,12 @@
     syncDock();
     if (returnFocus?.isConnected) returnFocus.focus({preventScroll:true});
     else trigger.focus({preventScroll:true});
+    // Re-apply after focus/showModal bookkeeping; mobile may ignore preventScroll.
+    const restoreScroll = () => window.scrollTo({ top: savedScroll, left: 0, behavior: 'auto' });
+    restoreScroll();
+    requestAnimationFrame(() => {
+      restoreScroll();
+      requestAnimationFrame(restoreScroll);
+    });
   });
 })();
