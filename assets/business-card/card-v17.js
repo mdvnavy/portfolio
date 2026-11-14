@@ -671,7 +671,7 @@
           'EMAIL;TYPE=WORK:navy@bashsystems.net',
           'URL;TYPE=WORK:https://bashsystems.net',
           'URL;TYPE=PORTFOLIO:https://cultivatedco.ca',
-          'NOTE:Rates (CAD/hr): Consultation $70/hr | Project Work $155/hr | Advanced Technical $215/hr. AI Agents at Work group workshop: C$5,000; 4 hours; 5-10 participants. Scope and applicable rate agreed before work begins.',
+          'NOTE:Rates (CAD/hr): Consultation $75/hr | Project Work $155/hr | Advanced Technical $215/hr. AI Agents at Work group workshop: C$5,000; 4 hours; 5-10 participants. Scope and applicable rate agreed before work begins.',
           'END:VCARD'
         ].join('\r\n');
 
