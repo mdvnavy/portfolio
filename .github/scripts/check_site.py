@@ -3,7 +3,8 @@
 Fails if index.html references a local file that does not exist, if CNAME is
 not cultivatedco.ca, or if the desktop side rail would show a visible
 scrollbar / stop being sticky / leave the stills gallery outside the
-page-layout content column (a recurring regression).
+page-layout content column (a recurring regression), or if the desktop
+content column is capped with a fixed max-width.
 """
 import re
 import sys
@@ -206,6 +207,52 @@ def collect_document_css(root, html):
     return "\n".join(chunks)
 
 
+
+def _is_class_element_selector(part, class_name):
+    """True if this compound selector's subject is .class_name itself."""
+    core = re.sub(r"::[-a-zA-Z]+.*$", "", part).strip()
+    chunk = re.split(r"[\s>+~]", core)[-1]
+    return bool(re.search(rf"(^|[^a-zA-Z0-9_-])\.{re.escape(class_name)}($|[^a-zA-Z0-9_-])", chunk))
+
+
+def _is_capped_max_width(value):
+    if not value:
+        return False
+    v = value.split("!")[0].strip().lower()
+    if v in ("none", "unset", "initial", "inherit", "auto", "100%", "100vw", "100dvw"):
+        return False
+    return bool(re.search(r"[0-9.]+\s*(px|rem|em|ch)", v))
+
+
+def check_fluid_width(root, html):
+    """Desktop .wrap / .page-content / .page-layout must not use a fixed max-width cap."""
+    errors = []
+    css = collect_document_css(root, html)
+    winning = {"wrap": None, "page-content": None, "page-layout": None}
+    for media, selector, decls in iter_style_rules(css):
+        if not _media_applies_at_side_rail(media):
+            continue
+        props = _parse_decls(decls)
+        if "max-width" not in props:
+            continue
+        for part in _selector_parts(selector):
+            for name in winning:
+                if _is_class_element_selector(part, name):
+                    winning[name] = props["max-width"]
+    if _is_capped_max_width(winning["wrap"]):
+        errors.append(
+            f"Desktop .wrap max-width is {winning['wrap']!r}; expected none "
+            "(or no fixed px/rem cap) so the layout can use the full viewport."
+        )
+    for name in ("page-content", "page-layout"):
+        if _is_capped_max_width(winning[name]):
+            errors.append(
+                f"Desktop .{name} max-width is {winning[name]!r}; expected no "
+                "fixed cap so the content column can fill the space beside the rail."
+            )
+    return errors
+
+
 def check_side_rail(root, html):
     errors = []
 
@@ -277,6 +324,7 @@ def main():
     errors = []
     errors.extend(check_local_refs_and_cname(root, html))
     errors.extend(check_side_rail(root, html))
+    errors.extend(check_fluid_width(root, html))
     ok = not errors
     if errors:
         print("Site check failures:")

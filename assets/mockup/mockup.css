@@ -107,3 +107,41 @@ html.cc-revealing .wrap{animation:ccRise .8s cubic-bezier(.2,.7,.2,1) both}
   .cc-reel{overflow-x:auto}
   .cc-reel-track{transform:none!important}
 }
+
+
+/* Fluid full-width layout: the page uses the whole viewport. The rail keeps
+   its fixed width and sticky, scrollbar-free behavior. Mobile gutters and
+   stacking are unchanged. No colour gradients. */
+@media(min-width:901px){
+  .wrap{
+    --cc-gutter:clamp(30px,3.2vw,64px);
+    max-width:none;
+    width:100%;
+    margin-inline:0;
+    padding-inline:var(--cc-gutter);
+  }
+  .wrap>.header{
+    margin-left:calc(0px - var(--cc-gutter));
+    margin-right:calc(0px - var(--cc-gutter));
+    padding-left:var(--cc-gutter);
+    padding-right:var(--cc-gutter);
+  }
+  .wrap>.header::after{
+    left:var(--cc-gutter);
+    right:var(--cc-gutter);
+  }
+  .page-layout{gap:clamp(30px,3vw,72px)}
+  .page-content{max-width:none;width:100%}
+  .cc-two-up{gap:clamp(18px,1.4vw,28px)}
+  .blackboard{gap:clamp(22px,2vw,40px)}
+  /* Stills grow modestly on very wide screens so the filmstrip uses the column. */
+  .cc-shot img,.cc-baton-card{height:calc(var(--h) * clamp(1,100vw / 1600,1.28))}
+  .cc-baton-card{width:calc(430px * clamp(1,100vw / 1600,1.28))}
+}
+
+/* Body copy keeps a readable measure; containers and media stretch. */
+.hero-intro,.hero-role,.section-intro,.detail-body,.experience-intro,.principle,
+.research-lead .research-summary,.research-list p,.work-contact p,.project p,
+.cc-top .hero-intro,.cc-case-note{max-width:75ch}
+.evidence-row .detail-body{max-width:none}
+.evidence-row .detail-body p,.evidence-row .detail-body dd{max-width:75ch}
