@@ -51,3 +51,31 @@ html.portfolio-card-open,html.portfolio-card-open body{overflow:hidden;overscrol
   .portfolio-card-close:focus-visible{top:8px;right:8px;width:auto;height:auto;min-height:44px;margin:0;padding:8px 13px;overflow:visible;clip-path:none;pointer-events:auto;z-index:2}
 }
 @media(max-width:900px) and (max-height:430px){.portfolio-card-dialog{padding:8px}}
+
+/* Full-screen poke card (card-poke.html). Overrides the framed pop-up above; trigger and dock unchanged. */
+.portfolio-card-dialog{padding:0}
+.portfolio-card-dialog[open]{display:block}
+.portfolio-card-panel{width:100%;height:100%;height:100dvh}
+.portfolio-card-frame{position:absolute;inset:0;width:100%;height:100%;background:transparent;color-scheme:light}
+.portfolio-card-topbar{position:absolute;inset:0 0 auto;height:0;padding:0;z-index:3;pointer-events:none}
+.portfolio-card-topbar h2{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.portfolio-card-dialog .portfolio-card-close,
+.portfolio-card-dialog .portfolio-card-close:focus-visible{position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));width:auto;height:auto;min-width:0;min-height:44px;margin:0;padding:8px 14px 8px 16px;overflow:visible;clip-path:none;white-space:nowrap;pointer-events:auto;z-index:3;border:1px solid rgba(14,14,14,.18);border-radius:999px;background:rgba(242,242,240,.92);color:#0E0E0E;box-shadow:0 2px 10px rgba(0,0,0,.18);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.portfolio-card-dialog .portfolio-card-close:hover{background:#F2F2F0}
+.portfolio-card-dialog .portfolio-card-close:focus-visible{outline:3px solid #7A7A7A;outline-offset:3px}
+.portfolio-card-loading{inset:48% 10% auto;color:#F2F2F0}
+.portfolio-card-loading span{background:#2B2B2B}
+
+/* Translucent shade over the portfolio: the page shows through as a blurred silhouette.
+   The card page (transparent) reports each wall hit; the shade steps here with the same 220ms fade. */
+.portfolio-card-dialog{--pc-tint:14,14,14;--pc-alpha:.74;background:rgba(var(--pc-tint),var(--pc-alpha));-webkit-backdrop-filter:blur(14px) saturate(.85);backdrop-filter:blur(14px) saturate(.85);transition:background-color 220ms ease-out}
+.portfolio-card-dialog[data-shade="0"]{--pc-tint:14,14,14;--pc-alpha:.74}
+.portfolio-card-dialog[data-shade="1"]{--pc-tint:43,43,43;--pc-alpha:.72}
+.portfolio-card-dialog[data-shade="2"]{--pc-tint:122,122,122;--pc-alpha:.70}
+.portfolio-card-dialog[data-shade="3"]{--pc-tint:207,207,207;--pc-alpha:.74}
+.portfolio-card-dialog[data-shade="4"]{--pc-tint:242,242,240;--pc-alpha:.80}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .portfolio-card-dialog{--pc-alpha:.96!important}
+}
+@media(prefers-reduced-transparency:reduce){.portfolio-card-dialog{--pc-alpha:.96!important;-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media(prefers-reduced-motion:reduce){.portfolio-card-dialog{transition:background-color 500ms ease}}
