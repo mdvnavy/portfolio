@@ -318,6 +318,83 @@ def check_side_rail(root, html):
     return errors
 
 
+
+def check_audit_live(root, html):
+    """Checks for the Nov 2026 live audit items: SEO files, no inlined fonts,
+    rates in the contact block, and Bespoke leading the case-studies TOC."""
+    errors = []
+    required = [
+        "favicon.ico",
+        "favicon.svg",
+        "apple-touch-icon.png",
+        "robots.txt",
+        "sitemap.xml",
+        "assets/og-image.png",
+        "assets/business-card/front-v17-thumb.jpg",
+        "fonts/archivo-normal-400_900.woff2",
+        "fonts/cormorantgaramond-normal-500.woff2",
+        "fonts/cormorantgaramond-italic-400.woff2",
+    ]
+    missing = [rel for rel in required if not (root / rel).exists()]
+    if missing:
+        errors.append("Missing required site files:")
+        errors.extend(f"  - {m}" for m in missing)
+
+    robots = (root / "robots.txt").read_text(encoding="utf-8", errors="replace") if (root / "robots.txt").exists() else ""
+    if "Sitemap: https://cultivatedco.ca/sitemap.xml" not in robots:
+        errors.append("robots.txt must allow crawling and point at https://cultivatedco.ca/sitemap.xml")
+    sitemap = (root / "sitemap.xml").read_text(encoding="utf-8", errors="replace") if (root / "sitemap.xml").exists() else ""
+    if "https://cultivatedco.ca/" not in sitemap:
+        errors.append("sitemap.xml must include https://cultivatedco.ca/")
+
+    if "data:font" in html or "data:application/font" in html:
+        errors.append("index.html still inlines font files as data: URLs; serve fonts/*.woff2 instead.")
+    if 'rel="canonical"' not in html or "https://cultivatedco.ca/" not in html:
+        errors.append("index.html is missing a canonical link to https://cultivatedco.ca/")
+    if 'name="description"' not in html:
+        errors.append("index.html is missing a meta description")
+    if 'property="og:image"' not in html or "assets/og-image.png" not in html:
+        errors.append("index.html is missing an Open Graph image tag")
+    if "intro-pending" in html:
+        errors.append("index.html still gates first paint with intro-pending")
+
+    contact = ""
+    m = re.search(r'<section[^>]*id="contact"[^>]*>[\s\S]*?</section>', html)
+    if not m:
+        errors.append("Contact section #contact is missing")
+    else:
+        contact = m.group(0)
+        for needle in ("Consultation $75", "Project $155", "Advanced technical $215", "CAD/hr", "navy@bashsystems.net"):
+            if needle not in contact:
+                errors.append(f"Contact section is missing {needle!r}")
+
+    # Bespoke must precede DIA in the Case Studies TOC (the #work subtree).
+    toc = re.search(
+        r'<a class="dir" href="#work">[\s\S]*?</a><ul>([\s\S]*?)</ul>\s*</li>',
+        html,
+    )
+    if not toc:
+        errors.append("Could not find the Case Studies & Builds TOC subtree")
+    else:
+        hrefs = re.findall(r'href="#([^"]+)"', toc.group(1))
+        # ignore the GitHub icon link which is an absolute URL, not a hash
+        if "bespoke-case" not in hrefs or "dia" not in hrefs:
+            errors.append(f"Case Studies TOC should list #bespoke-case and #dia, got {hrefs}")
+        elif hrefs.index("bespoke-case") > hrefs.index("dia"):
+            errors.append("Case Studies TOC must list Bespoke before DIA")
+
+    # Long-form case studies in #work: first project article should be Bespoke.
+    work = re.search(r'<section id="work"[^>]*>([\s\S]*?)</section>', html)
+    if not work:
+        errors.append("Missing #work section")
+    else:
+        ids = re.findall(r'<article\b[^>]*id="([^"]+)"', work.group(1))
+        if not ids or ids[0] != "bespoke-case":
+            errors.append(f"First long-form case study in #work should be #bespoke-case, got {ids[:3]}")
+
+    return errors
+
+
 def main():
     root = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".")
     html = (root / "index.html").read_text(encoding="utf-8", errors="replace")
@@ -325,6 +402,7 @@ def main():
     errors.extend(check_local_refs_and_cname(root, html))
     errors.extend(check_side_rail(root, html))
     errors.extend(check_fluid_width(root, html))
+    errors.extend(check_audit_live(root, html))
     ok = not errors
     if errors:
         print("Site check failures:")
