@@ -144,8 +144,6 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
 .hero-intro,.hero-role,.section-intro,.detail-body,.experience-intro,.principle,
 .research-lead .research-summary,.research-list p,.work-contact p,.project p,
 .cc-top .hero-intro{max-width:75ch}
-.evidence-row .detail-body{max-width:none}
-.evidence-row .detail-body p,.evidence-row .detail-body dd{max-width:75ch}
 
 /* Contact rates in the Work with me block — visible on mobile and desktop. */
 .work-contact .contact-rates{font-size:13px;line-height:1.8;max-width:75ch;margin:0 0 18px;color:#e2e9df}
