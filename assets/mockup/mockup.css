@@ -42,7 +42,6 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
 .cc-baton-card .p{color:#83A395}
 .cc-baton-card .id{color:#F8F3E9;font-weight:600}
 .cc-baton-card .c{color:#9FB5A9}
-.cc-baton-card .tag{font:600 9.5px/1.3 var(--sans);letter-spacing:1.3px;text-transform:uppercase;color:#C8D7C9;border:1px dashed rgba(200,215,201,.55);border-radius:99px;padding:6px 10px;align-self:flex-start}
 .cc-reel-hint{display:flex;justify-content:space-between;gap:16px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;color:var(--muted);margin:8px 0 0}
 @media(max-width:900px){.cc-reel{width:100vw;margin-left:calc(50% - 50vw)}.cc-reel-track{padding:0 28px}}
 @media(max-width:760px),(hover:none){
@@ -68,7 +67,6 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
 .cc-case-name small{display:block;font:600 10px/1.4 var(--sans);letter-spacing:1.5px;text-transform:uppercase;color:#C8D7C9;margin-top:8px}
 .cc-case-see{font:600 11px/1 var(--sans);letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap}
 .cc-case:focus-visible{outline:2px solid var(--green);outline-offset:4px}
-.cc-case-note{font-size:11px;line-height:1.6;color:var(--muted);margin:9px 2px 0}
 @media(max-width:760px){.cc-two-up{grid-template-columns:1fr;gap:24px}.cc-case-meta{left:18px;right:18px;bottom:16px}.cc-builds{padding-top:28px}}
 
 /* 4b. Bigger contact email */
@@ -145,7 +143,7 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
 /* Body copy keeps a readable measure; containers and media stretch. */
 .hero-intro,.hero-role,.section-intro,.detail-body,.experience-intro,.principle,
 .research-lead .research-summary,.research-list p,.work-contact p,.project p,
-.cc-top .hero-intro,.cc-case-note{max-width:75ch}
+.cc-top .hero-intro{max-width:75ch}
 .evidence-row .detail-body{max-width:none}
 .evidence-row .detail-body p,.evidence-row .detail-body dd{max-width:75ch}
 
