@@ -63,7 +63,9 @@
       range = Math.max(0, track.scrollWidth - viewport.clientWidth);
       if (pinSpace && usesTransform() && options.pin) {
         const sticky = options.pin;
-        const panel = Math.max(sticky.offsetHeight, viewport.clientHeight * 0.5);
+        // Use the pin's natural height only. A viewport-sized floor left a blank
+        // gap under the compact strip after the pin released.
+        const panel = sticky.offsetHeight;
         pinSpace.style.height = `${Math.round(panel + range)}px`;
       } else if (pinSpace) {
         pinSpace.style.height = '';
