@@ -111,35 +111,24 @@ details:not(.tree)[open]>summary:after{content:"−"}
 .bb-note .kicker{color:var(--muted);font-size:9px}
 .bb-note p{font:400 23px/1.3 var(--serif);margin:9px 0 12px}
 .bb-note small{font-size:10px;color:var(--muted)}
-.evidence{padding:40px 0 10px}
-.section-intro{font-size:12px;color:var(--muted);max-width:600px;margin:0 0 21px}
-.record-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 14px}
-.record-toolbar .section-intro{margin:0}
-.record-switch{display:flex;gap:0;border-bottom:1px solid var(--line)}
-.record-switch button{appearance:none;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:4px 10px 7px;font:650 9px/1 var(--sans);letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);cursor:pointer}
-.record-switch button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
-.record-switch button:focus-visible{outline:3px solid var(--rust);outline-offset:3px}
-.record-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.record-item{display:grid;grid-template-columns:138px 128px minmax(0,1fr);gap:8px 22px;align-items:baseline;padding:10px 2px;border-bottom:1px solid var(--line)}
-.record-date{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.evidence{padding:40px 0 18px}
+.section-intro{font-size:12px;color:var(--muted);max-width:600px;margin:0 0 16px}
+.record-hint{display:flex;justify-content:space-between;gap:16px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.record-pin-space{position:relative}
+.record-pin{position:relative;background:var(--paper);padding-bottom:8px;z-index:2}
+.record-reel{position:relative;width:100%;overflow:hidden;padding:10px 0 22px;outline:none}
+.record-track{display:flex;align-items:flex-start;gap:48px;width:max-content;margin:0;padding:0 72px 0 2px;list-style:none;position:relative;will-change:transform}
+.record-track:before{content:"";position:absolute;left:0;right:0;top:4px;height:1px;background:var(--line)}
+.record-item{flex:none;width:auto;position:relative;display:flex;flex-direction:row;align-items:baseline;gap:10px;padding:20px 4px 4px 0;color:inherit;text-decoration:none;white-space:nowrap}
+.record-tick{position:absolute;top:0;left:0;width:9px;height:9px;background:var(--green);border:2px solid var(--paper);border-radius:50%;box-sizing:border-box;transform:translateY(-4px)}
+.record-date{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
 .record-project{font-size:9px;letter-spacing:1.1px;text-transform:uppercase;font-weight:650;color:var(--green)}
-.record-title{font:500 18px/1.3 var(--serif)}
-.record-item:target{background:var(--surface);box-shadow:inset 3px 0 0 var(--deep);padding-left:14px;margin-left:-12px;padding-right:10px}
-.record-item{opacity:0;transform:translateY(8px)}
-.record-list.is-in .record-item{animation:record-in .55s cubic-bezier(.16,1,.3,1) forwards;animation-delay:calc(var(--i,0) * 45ms)}
-@keyframes record-in{to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){
-.record-item{opacity:1;transform:none;animation:none}
-}
-.evidence[data-record-view="timeline"] .record-list{border-top:0;margin-left:8px;padding-left:22px;border-left:1px solid var(--line)}
-.evidence[data-record-view="timeline"] .record-item{grid-template-columns:138px minmax(0,1fr);grid-template-areas:"date project" "title title";position:relative;padding:11px 0 12px 8px;border-bottom:0}
-.evidence[data-record-view="timeline"] .record-item+.record-item{padding-top:16px}
-.evidence[data-record-view="timeline"] .record-date{grid-area:date}
-.evidence[data-record-view="timeline"] .record-project{grid-area:project}
-.evidence[data-record-view="timeline"] .record-title{grid-area:title;font-size:20px}
-.evidence[data-record-view="timeline"] .record-item:before{content:"";position:absolute;left:-27px;top:14px;width:9px;height:9px;background:var(--green);border:2px solid var(--paper);border-radius:50%;box-sizing:border-box}
-.evidence[data-record-view="timeline"] .record-item:target{margin-left:-8px;padding-left:16px}
-.evidence[data-record-view="timeline"] .record-item:target:before{left:-19px}
+.record-dot{color:var(--muted);font-weight:400;font-size:11px;letter-spacing:0;text-transform:none}
+.record-title{font:500 20px/1.2 var(--serif);white-space:nowrap}
+.record-item:target,.record-item.is-target{background:var(--surface);box-shadow:inset 0 3px 0 var(--deep);padding-left:10px;margin-left:-10px;padding-right:10px}
+.record-item:target .record-tick,.record-item.is-target .record-tick{background:var(--deep)}
+.record-item:focus-visible{outline:3px solid var(--rust);outline-offset:6px}
+.record-pin-space.is-pinned .record-pin{position:sticky;top:calc(var(--cc-hdr,96px) + 8px);min-height:calc(100vh - var(--cc-hdr,96px) - 8px);box-sizing:border-box}
 .suite{padding:35px 0 10px}
 .suite-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:30px;border-top:1px solid var(--line);padding-top:23px}
 .suite h3{font:500 31px/1.1 var(--serif);margin:0 0 11px}
@@ -213,14 +202,8 @@ details:not(.tree)[open]>summary:after{content:"−"}
 .bb-note{border-left:0;border-top:1px solid var(--line);padding:18px 0 0;margin-top:20px}
 .bb-note p{font-size:22px}
 .evidence{padding-top:31px}
-.record-toolbar{flex-direction:column;align-items:stretch;gap:12px;margin-bottom:10px}
-.record-item{grid-template-columns:auto 1fr;gap:2px 14px;padding:12px 0}
+.record-title{font-size:18px}
 .record-date{font-size:9px}
-.record-title{grid-column:1/-1;font-size:18px}
-.evidence[data-record-view="timeline"] .record-list{margin-left:4px;padding-left:18px}
-.evidence[data-record-view="timeline"] .record-item{grid-template-columns:auto 1fr;padding-left:6px}
-.evidence[data-record-view="timeline"] .record-item:before{left:-23px;width:8px;height:8px}
-.evidence[data-record-view="timeline"] .record-title{font-size:18px}
 .suite-grid{display:block}
 .support-tools{border-left:0;border-top:1px solid var(--line);padding:23px 0 0;margin-top:25px}
 .suite p{font-size:13px}
@@ -349,7 +332,7 @@ body{font-size:11px}}
 <nav aria-label="On this page"><details class="tree" open><summary>On this page</summary><p class="tree-root">nwakwesi / work</p><ul>
 <li><a class="dir" href="#hero"><span class="n">00</span>Introduction</a></li>
 <li><a class="dir" href="#work"><span class="n">01</span>Case Studies &amp; Builds</a><ul><li><a href="#bespoke-case">Bespoke</a></li><li class="toc-project"><a href="#dia">DIA</a><a class="source-icon" href="https://github.com/mdvnavy/Dia" target="_blank" rel="noopener" aria-label="DIA on GitHub" title="DIA on GitHub"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.86c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a></li><li><a href="#blackboard">Blackboard</a></li></ul></li>
-<li><a class="dir" href="#evidence"><span class="n">02</span>The build record</a><ul><li><a href="#dia-record">DIA build record</a></li><li><a href="#amazon-ads">Amazon Ads</a></li><li><a href="#bespoke-record">Bespoke desktop actions</a></li><li><a href="#family-tree">Family Tree</a></li><li><a href="#dia-savant">DIA: Savant build</a></li><li><a href="#tia">Tia</a></li><li><a href="#bespoke-cursor">Bespoke mini-cursor</a></li><li><a href="#bash-site">BASH site</a></li><li><a href="#components">Components catalog</a></li><li><a href="#petting-zoo">Navy’s Petting Zoo</a></li><li><a href="#this-site">This site</a></li><li><a href="#supporting-systems">Supporting systems</a></li></ul></li>
+<li><a class="dir" href="#evidence"><span class="n">02</span>The build record</a><ul><li><a href="#dia-record">DIA build record</a></li><li><a href="#amazon-ads">Amazon Ads</a></li><li><a href="#bespoke-record">Bespoke desktop actions</a></li><li><a href="#bespoke-cursor">Bespoke mini-cursor</a></li><li><a href="#bash-site">BASH site</a></li><li><a href="#supporting-systems">Supporting systems</a></li><li><a href="#tia">Tia</a></li><li><a href="#family-tree">Family Tree</a></li><li><a href="#dia-savant">DIA: Savant build</a></li><li><a href="#this-site">This site</a></li><li><a href="#components">Components catalog</a></li><li><a href="#petting-zoo">Navy’s Petting Zoo</a></li></ul></li>
 <li><a class="dir" href="#suite"><span class="n">03</span>Tools I work with</a><ul><li><a href="#bespoke">Bespoke</a></li><li><a href="#baton">Baton</a></li><li><a href="#agent-eggs">Agent Eggs</a></li><li><a href="#local-memory">Local memory · in progress</a></li></ul></li>
 <li><a class="dir" href="#research"><span class="n">04</span>Research &amp; writing</a></li>
 <li><a class="dir" href="#background"><span class="n">05</span>Enterprise experience</a></li>
@@ -367,28 +350,30 @@ body{font-size:11px}}
 <div class="dia-visual" role="img" aria-label="DIA workflow: a discovery questionnaire is parsed and scored to generate a client profile, opportunity analysis and proposal draft."><div class="visual-label">From discovery to a starting point</div><div class="intake"><strong>Discovery questionnaire</strong><small>INPUT</small></div><div class="process">Parse / Validate / Score</div><div class="documents"><div class="document"><span class="doc-num">01</span><div><strong>Client profile</strong><small>The business and its context</small></div></div><div class="document"><span class="doc-num">02</span><div><strong>Opportunity analysis</strong><small>A structured assessment</small></div></div><div class="document"><span class="doc-num">03</span><div><strong>Proposal draft</strong><small>A document to review and refine</small></div></div></div></div>
 <details class="dia-detail"><summary>Design decisions &amp; what to inspect</summary><div class="detail-body"><p>The deterministic path makes the scoring and generated documents inspectable without relying on a model response. The agent can call the same functions rather than invent a separate scoring process.</p><p>The public repository includes parser and scoring logic, fixtures, tests and an evaluation harness. <a href="#dia-record">See the dated build record ↓</a></p></div></details></article>
 <article class="project blackboard" id="blackboard" aria-labelledby="bb-heading"><div><h3 id="bb-heading">Blackboard</h3><p class="lead">A visible record of work across people and agents.</p><p>A local viewer for file-based events: handoffs, shared artifacts and activity across the fleet. I use it in my own environment and refine it through practice.</p></div><div class="bb-note"><span class="kicker">The implementation choice</span><p>The record remains readable even when the viewer is down.</p><small>Events are plain JSON files.</small></div></article></section>
-<section id="evidence" class="evidence" data-record-view="index" aria-labelledby="evidence-heading"><div class="section-heading"><h2 id="evidence-heading">The build record</h2><span class="section-label">02 / Selected evidence</span></div>
-<div class="record-toolbar">
+<section id="evidence" class="evidence" aria-labelledby="evidence-heading">
+<div class="record-pin-space" id="record-pin-space">
+<div class="record-pin" id="record-pin">
+<div class="section-heading"><h2 id="evidence-heading">The build record</h2><span class="section-label">02 / Selected evidence</span></div>
 <p class="section-intro">A few dated implementation steps.</p>
-<div class="record-switch" role="tablist" aria-label="Build record layout">
-<button type="button" role="tab" id="record-view-index" aria-controls="record-list" aria-selected="true" data-view="index">Index</button>
-<button type="button" role="tab" id="record-view-timeline" aria-controls="record-list" aria-selected="false" data-view="timeline">Timeline</button>
+<p class="record-hint"><span>2026</span><span>Scroll to browse</span></p>
+<div class="record-reel" id="record-reel" role="region" aria-label="Build record timeline" tabindex="-1">
+<ol class="record-track" id="record-list">
+<li class="record-item" id="dia-record" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">06–09 Jun 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">DIA</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">From public demo to capture tooling</span></li>
+<li class="record-item" id="amazon-ads" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">27–28 Jul 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Amazon Ads</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">A queryable reporting pipeline</span></li>
+<li class="record-item" id="bespoke-record" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">08 Oct 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Bespoke</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Repeatable desktop actions</span></li>
+<li class="record-item" id="bespoke-cursor" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">09 Oct–17 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Bespoke</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Mini-cursor chat, native capture and the Navy companion</span></li>
+<li class="record-item" id="bash-site" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">09 Oct–18 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">BASH site</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Services, clay launch, booking routes and intake</span></li>
+<li class="record-item" id="supporting-systems" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">10 Oct–13 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Supporting systems</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">The smaller repos the main work runs on</span></li>
+<li class="record-item" id="tia" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">11 Oct–15 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Tia</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Output canvas, gated exports and workspace rebuild</span></li>
+<li class="record-item" id="family-tree" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">16–23 Oct 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Family Tree</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Nwakwesi family record</span></li>
+<li class="record-item" id="dia-savant" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">23 Oct 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">DIA</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Persona v1.2 and the Savant scoring build</span></li>
+<li class="record-item" id="this-site" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">23 Oct–15 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">This site</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">The business card and the November redesign</span></li>
+<li class="record-item" id="components" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">23 Oct–17 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Components</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">Icons, prototypes and reference sections</span></li>
+<li class="record-item" id="petting-zoo" tabindex="0"><span class="record-tick" aria-hidden="true"></span><span class="record-date">16–17 Nov 2026</span><span class="record-dot" aria-hidden="true">·</span><span class="record-project">Navy’s Petting Zoo</span><span class="record-dot" aria-hidden="true">·</span><span class="record-title">The cast, their reactions, and a day/night world</span></li>
+</ol>
 </div>
 </div>
-<ol class="record-list" id="record-list">
-<li class="record-item" id="dia-record" style="--i:0" tabindex="-1"><span class="record-date">06–09 Jun 2026</span><span class="record-project">DIA</span><span class="record-title">From public demo to capture tooling</span></li>
-<li class="record-item" id="amazon-ads" style="--i:1" tabindex="-1"><span class="record-date">27–28 Jul 2026</span><span class="record-project">Amazon Ads</span><span class="record-title">A queryable reporting pipeline</span></li>
-<li class="record-item" id="bespoke-record" style="--i:2" tabindex="-1"><span class="record-date">08 Oct 2026</span><span class="record-project">Bespoke</span><span class="record-title">Repeatable desktop actions</span></li>
-<li class="record-item" id="family-tree" style="--i:3" tabindex="-1"><span class="record-date">16–23 Oct 2026</span><span class="record-project">Family Tree</span><span class="record-title">Nwakwesi family record</span></li>
-<li class="record-item" id="dia-savant" style="--i:4" tabindex="-1"><span class="record-date">23 Oct 2026</span><span class="record-project">DIA</span><span class="record-title">Persona v1.2 and the Savant scoring build</span></li>
-<li class="record-item" id="tia" style="--i:5" tabindex="-1"><span class="record-date">11 Oct–15 Nov 2026</span><span class="record-project">Tia</span><span class="record-title">Output canvas, gated exports and workspace rebuild</span></li>
-<li class="record-item" id="bespoke-cursor" style="--i:6" tabindex="-1"><span class="record-date">09 Oct–17 Nov 2026</span><span class="record-project">Bespoke</span><span class="record-title">Mini-cursor chat, native capture and the Navy companion</span></li>
-<li class="record-item" id="bash-site" style="--i:7" tabindex="-1"><span class="record-date">09 Oct–18 Nov 2026</span><span class="record-project">BASH site</span><span class="record-title">Services, clay launch, booking routes and intake</span></li>
-<li class="record-item" id="components" style="--i:8" tabindex="-1"><span class="record-date">23 Oct–17 Nov 2026</span><span class="record-project">Components</span><span class="record-title">Icons, prototypes and reference sections</span></li>
-<li class="record-item" id="petting-zoo" style="--i:9" tabindex="-1"><span class="record-date">16–17 Nov 2026</span><span class="record-project">Navy’s Petting Zoo</span><span class="record-title">The cast, their reactions, and a day/night world</span></li>
-<li class="record-item" id="this-site" style="--i:10" tabindex="-1"><span class="record-date">23 Oct–15 Nov 2026</span><span class="record-project">This site</span><span class="record-title">The business card and the November redesign</span></li>
-<li class="record-item" id="supporting-systems" style="--i:11" tabindex="-1"><span class="record-date">10 Oct–13 Nov 2026</span><span class="record-project">Supporting systems</span><span class="record-title">The smaller repos the main work runs on</span></li>
-</ol></section>
+</div></section>
 <section class="suite" id="suite" aria-labelledby="suite-heading"><div class="section-heading"><h2 id="suite-heading">Tools I work with</h2><span class="section-label">03 / The supporting systems</span></div><div class="suite-grid"><article id="bespoke"><h3>Bespoke</h3><p>Operator-controlled reading, voice interaction and desktop actions. A local tool for moving between the written word, conversation and repeatable steps.</p><dl class="suite-mode"><dt>speak</dt><dd>Read text with playback controls.</dd><dt>ask</dt><dd>Answer a prompt, then speak the response.</dd><dt>live</dt><dd>Stream microphone audio and native audio replies, with interruption handling.</dd><dt>cursor</dt><dd>Desktop actions with durable targets and verified step recipes.</dd></dl></article><div class="support-tools"><article id="baton"><h3>Baton</h3><p>Routing and coordination between agents, supporting how work moves through the wider environment.</p></article><article id="agent-eggs"><h3>Agent Eggs</h3><p>Portable context and capabilities, packaged so useful knowledge can travel between environments.</p><small>Reusable context packages</small></article></div></div><aside id="exploring" class="unfinished"><span class="kicker">In progress / Local memory in Bespoke</span><p id="local-memory">Groundwork for keeping useful context across sessions.</p></aside></section>
 <section id="research" class="research" aria-labelledby="research-heading">
 <div class="section-heading"><h2 id="research-heading">Research &amp; writing</h2><span class="section-label">04 / The thinking behind the work</span></div>
@@ -456,5 +441,6 @@ body{font-size:11px}}
 </dialog>
 <noscript><p><a href="https://script.google.com/macros/s/AKfycbwg6ZbVfSHS0-ApjUwGxPZkLOzrHJnPtWfqv4Kylj2Vq20z4rra70MfnhUVaSTuBW4P8w/exec?view=card">Open the business card</a></p></noscript>
 <script src="assets/business-card/portfolio-card.js" defer></script>
+<script src="assets/horizontal-reel.js"></script>
 <script src="assets/mockup/mockup.js"></script>
-<script src="assets/record-list.js" defer></script></body></html>
+<script src="assets/record-list.js"></script></body></html>
