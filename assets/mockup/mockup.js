@@ -50,7 +50,7 @@
 
   /* 4. Frosted header when imagery sits under it */
   const header = document.querySelector('.wrap > .header');
-  const visuals = [...document.querySelectorAll('.cc-reel, .cc-case')];
+  const visuals = [...document.querySelectorAll('.cc-reel, .cc-case, .record-reel')];
   let hb = 96, queued = false;
   const measureHeader = () => { hb = header.getBoundingClientRect().height; root.style.setProperty('--cc-hdr', hb + 'px'); };
   const frost = () => {
@@ -63,36 +63,18 @@
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', () => { measureHeader(); schedule(); });
 
-  /* 2. Hero row drifts with the pointer (desktop, fine pointer only) */
+  /* 2. Hero row drifts with the pointer (desktop, fine pointer only).
+     Motion lives in assets/horizontal-reel.js, shared with the build record. */
   const reel = document.getElementById('cc-reel');
-  if (reel) {
-    const track = reel.querySelector('.cc-reel-track');
-    const drift = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 761px)');
-    let range = 0, target = 0, cur = 0, raf = 0;
-    const measure = () => { range = Math.max(0, track.scrollWidth - reel.clientWidth); target = Math.min(target, range); kick(); };
-    const step = () => {
-      cur += (target - cur) * 0.075;
-      if (Math.abs(target - cur) < 0.3) cur = target;
-      track.style.transform = `translate3d(${-cur.toFixed(2)}px,0,0)`;
-      raf = cur === target ? 0 : requestAnimationFrame(step);
-    };
-    const kick = () => { if (!raf && drift.matches && !rm.matches) raf = requestAnimationFrame(step); };
-    window.addEventListener('pointermove', e => {
-      if (!drift.matches || rm.matches) return;
-      const r = reel.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > innerHeight) return;
-      const t = Math.min(1, Math.max(0, (e.clientX / innerWidth - 0.15) / 0.7));
-      target = t * range; kick();
-    }, { passive: true });
-    reel.addEventListener('focusin', e => {
-      const shot = e.target.closest('.cc-shot'); if (!shot || !drift.matches) return;
-      target = Math.max(0, Math.min(range, shot.offsetLeft - 46)); kick();
-    });
+  if (reel && typeof window.bindHorizontalReel === 'function') {
     const hint = document.querySelector('.cc-reel-hint span:last-child');
-    const setHint = () => { if (hint) hint.textContent = drift.matches && !rm.matches ? 'Move across to browse' : 'Swipe to browse'; };
-    setHint(); drift.addEventListener('change', setHint);
-    window.addEventListener('resize', measure);
-    window.addEventListener('load', measure);
-    measure();
+    window.bindHorizontalReel({
+      viewport: reel,
+      track: reel.querySelector('.cc-reel-track'),
+      itemSelector: '.cc-shot',
+      reducedMedia: rm,
+      drive: 'pointer',
+      hint,
+    });
   }
 })();

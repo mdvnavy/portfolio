@@ -43,7 +43,7 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
 .cc-baton-card .id{color:#F8F3E9;font-weight:600}
 .cc-baton-card .c{color:#9FB5A9}
 .cc-reel-hint{display:flex;justify-content:space-between;gap:16px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;color:var(--muted);margin:8px 0 0}
-@media(max-width:900px){.cc-reel{width:100vw;margin-left:calc(50% - 50vw)}.cc-reel-track{padding:0 28px}}
+@media(max-width:900px){.cc-reel{width:100vw;margin-left:calc(50% - 50vw)}.cc-reel-track{padding:0 28px}.record-reel{width:100vw;margin-left:calc(50% - 50vw)}.record-track{padding-right:28px}}
 @media(max-width:760px),(hover:none){
   .cc-reel{overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .cc-reel::-webkit-scrollbar{display:none}
@@ -51,6 +51,14 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
   .cc-shot{scroll-snap-align:start}
   .cc-shot img,.cc-baton-card{height:calc(var(--h) * .62)}
   .cc-baton-card{width:290px;padding:16px 17px;font-size:10.5px}
+}
+@media(max-width:760px){
+  .record-pin{position:static}
+  .record-pin-space{height:auto!important}
+  .record-reel{width:100vw;margin-left:calc(50% - 50vw);overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .record-reel::-webkit-scrollbar{display:none}
+  .record-track{transform:none!important;padding:0 21px}
+  .record-item{scroll-snap-align:start}
 }
 
 /* 3. BUILDS index word and the two-up */
@@ -107,6 +115,11 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
   .cc-intro,.cc-intro *,.cc-shot img,.cc-case img,.wrap>.header{transition:none!important;animation:none!important}
   .cc-reel{overflow-x:auto}
   .cc-reel-track{transform:none!important}
+  .record-pin{position:static}
+  .record-pin-space{height:auto!important}
+  .record-reel{overflow-x:auto;scrollbar-width:none}
+  .record-reel::-webkit-scrollbar{display:none}
+  .record-track{transform:none!important}
 }
 
 
@@ -144,8 +157,6 @@ a.cc-shot:focus-visible{outline:2px solid var(--green);outline-offset:6px;border
 .hero-intro,.hero-role,.section-intro,.detail-body,.experience-intro,.principle,
 .research-lead .research-summary,.research-list p,.work-contact p,.project p,
 .cc-top .hero-intro{max-width:75ch}
-.evidence-row .detail-body{max-width:none}
-.evidence-row .detail-body p,.evidence-row .detail-body dd{max-width:75ch}
 
 /* Contact rates in the Work with me block — visible on mobile and desktop. */
 .work-contact .contact-rates{font-size:13px;line-height:1.8;max-width:75ch;margin:0 0 18px;color:#e2e9df}
